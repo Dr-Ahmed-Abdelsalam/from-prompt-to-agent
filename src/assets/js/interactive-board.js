@@ -14,15 +14,16 @@
     const initial = new Map();
     nodes.forEach(node => {
       initial.set(node, {
-        left: node.style.getPropertyValue('--x'),
-        top: node.style.getPropertyValue('--y')
+        x: node.style.getPropertyValue('--x'),
+        y: node.style.getPropertyValue('--y')
       });
+      node.setAttribute('aria-pressed', 'false');
+      node.setAttribute('title', 'اسحب لتحريك العنصر · اضغط لعرض الشرح');
     });
 
     let selected = null;
     let focusMode = false;
-    let drag = null;
-    let moved = false;
+    let dragState = null;
 
     const descriptions = {
       ai: ['Artificial Intelligence', 'الذكاء الاصطناعي', 'المجال الأوسع الذي يضم تقنيات وقدرات متعددة؛ وليس تطبيقًا واحدًا بعينه.'],
@@ -72,15 +73,8 @@
       });
     }
 
-    function setSelected(node) {
-      selected = node;
-      nodes.forEach(item => item.classList.toggle('is-selected', item === node));
-      linksLayer?.querySelectorAll('line').forEach(line => {
-        const related = node && (node === core || line.dataset.linkTo === node.dataset.nodeKey);
-        line.classList.toggle('is-related', Boolean(related));
-      });
-      updateFocus();
-      updateDetail();
+    function setStatus(text) {
+      if (status) status.innerHTML = text;
     }
 
     function updateDetail() {
@@ -111,77 +105,121 @@
       });
     }
 
-    function setStatus(text) {
-      if (status) status.innerHTML = text;
+    function setSelected(node) {
+      selected = node;
+      nodes.forEach(item => {
+        const active = item === node;
+        item.classList.toggle('is-selected', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      linksLayer?.querySelectorAll('line').forEach(line => {
+        const related = node && (node === core || line.dataset.linkTo === node.dataset.nodeKey);
+        line.classList.toggle('is-related', Boolean(related));
+      });
+      updateFocus();
+      updateDetail();
     }
 
-    function positionFromPointer(event, node) {
+    function moveNodeFromPointer(event) {
+      if (!dragState) return;
+      const { node, pointerId, offsetX, offsetY } = dragState;
+      if (event.pointerId !== pointerId) return;
+
       const rect = board.getBoundingClientRect();
       const nodeRect = node.getBoundingClientRect();
       const halfW = nodeRect.width / 2;
       const halfH = nodeRect.height / 2;
-      const padding = 14;
-      const x = Math.min(rect.width - halfW - padding, Math.max(halfW + padding, event.clientX - rect.left - drag.offsetX));
-      const y = Math.min(rect.height - halfH - padding, Math.max(halfH + padding, event.clientY - rect.top - drag.offsetY));
-      node.style.left = `${x}px`;
-      node.style.top = `${y}px`;
+      const pad = 18;
+
+      let centerX = event.clientX - rect.left - offsetX;
+      let centerY = event.clientY - rect.top - offsetY;
+      centerX = Math.max(halfW + pad, Math.min(rect.width - halfW - pad, centerX));
+      centerY = Math.max(halfH + pad, Math.min(rect.height - halfH - pad, centerY));
+
+      node.style.left = `${centerX}px`;
+      node.style.top = `${centerY}px`;
       node.style.removeProperty('--x');
       node.style.removeProperty('--y');
+
+      const distance = Math.hypot(event.clientX - dragState.startX, event.clientY - dragState.startY);
+      if (distance > 5) dragState.moved = true;
+      drawLinks();
+    }
+
+    function finishDrag(event) {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+      const state = dragState;
+      dragState = null;
+      state.node.classList.remove('is-dragging');
+      board.classList.remove('is-dragging-board');
+      document.documentElement.classList.remove('presenter-dragging');
+
+      if (state.moved) {
+        setSelected(state.node);
+        setStatus(`<b>MOVED</b> ${state.node.dataset.nodeKey.toUpperCase()} · اسحب عنصرًا آخر أو اضغط للشرح`);
+      } else {
+        setSelected(selected === state.node ? null : state.node);
+        setStatus('<b>DRAG</b> اسحب أي عقدة · <b>CLICK</b> لشرحها');
+      }
+      drawLinks();
     }
 
     nodes.forEach(node => {
       node.addEventListener('pointerdown', event => {
-        if (event.button !== 0) return;
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
         event.preventDefault();
-        const nodeRect = node.getBoundingClientRect();
-        drag = {
+        event.stopPropagation();
+
+        const rect = node.getBoundingClientRect();
+        dragState = {
           node,
+          pointerId: event.pointerId,
           startX: event.clientX,
           startY: event.clientY,
-          offsetX: event.clientX - (nodeRect.left + nodeRect.width / 2),
-          offsetY: event.clientY - (nodeRect.top + nodeRect.height / 2)
+          offsetX: event.clientX - (rect.left + rect.width / 2),
+          offsetY: event.clientY - (rect.top + rect.height / 2),
+          moved: false
         };
-        moved = false;
+
         node.classList.add('is-dragging');
-        node.setPointerCapture?.(event.pointerId);
-        setStatus('<b>DRAG</b> حرّك العقدة ثم اتركها');
+        board.classList.add('is-dragging-board', 'has-interacted');
+        document.documentElement.classList.add('presenter-dragging');
+        setStatus(`<b>DRAGGING</b> ${node.dataset.nodeKey.toUpperCase()} · حرّك الماوس ثم اترك`);
       });
 
-      node.addEventListener('pointermove', event => {
-        if (!drag || drag.node !== node) return;
-        const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
-        if (distance > 4) moved = true;
-        positionFromPointer(event, node);
-        drawLinks();
+      node.addEventListener('pointerenter', () => {
+        if (dragState) return;
+        board.classList.add('has-hovered');
+        setStatus(`<b>READY</b> ${node.dataset.nodeKey.toUpperCase()} · اسحب للتحريك · اضغط للشرح`);
       });
 
-      const endDrag = event => {
-        if (!drag || drag.node !== node) return;
-        node.classList.remove('is-dragging');
-        try { node.releasePointerCapture?.(event.pointerId); } catch (_) {}
-        if (!moved) setSelected(selected === node ? null : node);
-        else setSelected(node);
-        drag = null;
-        setStatus('<b>DRAG</b> اسحب أي عقدة · <b>CLICK</b> لشرحها');
-        drawLinks();
-      };
-
-      node.addEventListener('pointerup', endDrag);
-      node.addEventListener('pointercancel', endDrag);
-      node.addEventListener('mouseenter', () => {
-        if (!drag) setStatus(`<b>${node.dataset.nodeKey.toUpperCase()}</b> اسحب أو اضغط للشرح`);
+      node.addEventListener('pointerleave', () => {
+        if (!dragState) setStatus('<b>DRAG</b> اسحب أي عقدة · <b>CLICK</b> لشرحها');
       });
-      node.addEventListener('mouseleave', () => {
-        if (!drag) setStatus('<b>DRAG</b> اسحب أي عقدة · <b>CLICK</b> لشرحها');
+
+      node.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          setSelected(selected === node ? null : node);
+        }
       });
     });
+
+    window.addEventListener('pointermove', event => {
+      if (!dragState) return;
+      event.preventDefault();
+      moveNodeFromPointer(event);
+    }, { passive: false });
+
+    window.addEventListener('pointerup', finishDrag);
+    window.addEventListener('pointercancel', finishDrag);
 
     focusButton?.addEventListener('click', event => {
       event.stopPropagation();
       focusMode = !focusMode;
       updateFocus();
-      if (focusMode && !selected) setStatus('<b>FOCUS</b> اختر عقدة أولًا');
-      else setStatus(focusMode ? '<b>FOCUS ON</b> بقية المفاهيم خافتة' : '<b>FOCUS OFF</b> كل المفاهيم ظاهرة');
+      if (focusMode && !selected) setStatus('<b>FOCUS</b> اضغط عقدة أولًا ثم فعّل التركيز');
+      else setStatus(focusMode ? '<b>FOCUS ON</b> تم عزل الفكرة المحددة' : '<b>FOCUS OFF</b> كل المفاهيم ظاهرة');
     });
 
     resetButton?.addEventListener('click', event => {
@@ -190,24 +228,27 @@
         const state = initial.get(node);
         node.style.left = '';
         node.style.top = '';
-        node.style.setProperty('--x', state.left);
-        node.style.setProperty('--y', state.top);
+        node.style.setProperty('--x', state.x);
+        node.style.setProperty('--y', state.y);
         node.classList.remove('is-selected', 'is-dimmed', 'is-dragging');
+        node.setAttribute('aria-pressed', 'false');
       });
       selected = null;
       focusMode = false;
       detail?.classList.remove('is-open', 'node-detail--chatgpt');
       linksLayer?.classList.remove('is-muted');
       focusButton?.classList.remove('is-active');
+      board.classList.remove('has-interacted', 'is-dragging-board');
       requestAnimationFrame(drawLinks);
       setStatus('<b>RESET</b> عادت اللوحة إلى وضع البداية');
     });
 
     board.addEventListener('pointerdown', event => {
-      if (event.target === board || event.target === linksLayer) setSelected(null);
+      if (event.target.closest('[data-knowledge-node], .board-toolbar')) return;
+      setSelected(null);
     });
 
-    const observer = new ResizeObserver(() => drawLinks());
+    const observer = new ResizeObserver(drawLinks);
     observer.observe(board);
     window.addEventListener('resize', drawLinks);
     requestAnimationFrame(() => requestAnimationFrame(drawLinks));
