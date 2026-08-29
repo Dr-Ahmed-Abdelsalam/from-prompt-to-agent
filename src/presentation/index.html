@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>من مخاطبة الآلة إلى تفويضها</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Noto+Kufi+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/presentation-v2.css">
+</head>
+<body>
+<main class="deck" id="deck" tabindex="0">
+  <div class="world" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+  <svg class="symbols" aria-hidden="true">
+    <symbol id="i-logo" viewBox="0 0 120 100"><path d="M22 76h76v9H22zM31 65h58v9H31z"/><path d="M45 22l27 27-10 10-27-27zM70 14l16 16-9 9-16-16zM39 39l16 16-9 9-16-16zM59 52l32 32-7 7-32-32z"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 24 24"><circle cx="8" cy="6" r="1.6"/><circle cx="16" cy="6" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M5 8V3M5 3h5M5.3 3.4A9 9 0 1 1 3 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-focus" viewBox="0 0 24 24"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7M8 12h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M8 16L16 8M10 8h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <!-- 00 COVER -->
+  <section class="scene scene--cover is-active" data-scene="0">
+    <div class="cover-logo enter" style="--d:.05s"><svg><use href="#i-logo"/></svg></div>
+    <div class="cover-copy">
+      <h1 class="enter" style="--d:.16s">من مخاطبة الآلة إلى <em>تفويضها</em></h1>
+      <p class="cover-sub enter" style="--d:.28s">من هندسة الأوامر إلى هندسة الوكلاء</p>
+      <div class="cover-name enter" style="--d:.42s"><span>دكتور</span><strong>أحمد عبدالسلام</strong></div>
+    </div>
+    <button class="start-button enter" style="--d:.55s" data-jump="1"><span>ابدأ</span><b>←</b></button>
+    <div class="cover-wave" aria-hidden="true"></div>
+  </section>
+
+  <!-- 01 HUB -->
+  <section class="scene scene--hub" data-scene="1">
+    <div class="hub-logo enter" style="--d:.05s"><svg><use href="#i-logo"/></svg></div>
+    <h2 class="hub-title enter" style="--d:.12s">محاور الندوة</h2>
+    <div class="hub-route enter" style="--d:.22s">
+      <button class="hub-card is-current" data-jump="2"><b>01</b><span>كيف تعمل الآلة؟</span><small>من التدريب إلى التوليد</small></button>
+      <button class="hub-card"><b>02</b><span>هندسة الأوامر</span><small>Prompt Engineering</small></button>
+      <button class="hub-card"><b>03</b><span>هندسة السياق</span><small>Context Engineering</small></button>
+      <button class="hub-card"><b>04</b><span>من الـPrompt إلى Workflow</span><small>AI Workflow</small></button>
+      <button class="hub-card"><b>05</b><span>من سير العمل إلى هندسة الوكلاء</span><small>Agent Engineering</small></button>
+    </div>
+    <div class="control-strip enter" style="--d:.38s"><span>الرقابة على التفويض</span></div>
+  </section>
+
+  <!-- 02 CHAPTER INTRO -->
+  <section class="scene scene--chapter-intro" data-scene="2">
+    <span class="scene-no">01</span>
+    <div class="chapter-copy">
+      <h2 class="enter" style="--d:.1s">كيف تعمل الآلة؟</h2>
+      <p class="enter" style="--d:.22s">من التدريب إلى التوليد</p>
+      <div class="chapter-question enter" style="--d:.36s">ماذا يحدث بين ما يدخل إلى النظام… وما يخرج منه؟</div>
+    </div>
+    <div class="machine-bridge enter" style="--d:.18s" aria-hidden="true">
+      <div class="input-stack"><span>PDF</span><span>TEXT</span><span>IMAGE</span><span>DATA</span></div>
+      <div class="signal-line"></div><div class="mystery-core">؟</div><div class="signal-line"></div>
+      <div class="output-sheet"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- 03 CHAPTER MAP -->
+  <section class="scene scene--chapter-map" data-scene="3">
+    <span class="scene-no">02</span>
+    <h2 class="section-title enter" style="--d:.08s">رحلة داخل الآلة</h2>
+    <div class="chapter-map enter" style="--d:.18s">
+      <span>المفاهيم</span><span>البيانات</span><span>التمثيل الرقمي</span><span>التدريب</span><span>التوليد</span><span>القدرات والحدود</span><span>الإنسان والعمل</span><span>تصحيح المفاهيم</span><span>Workshop</span>
+    </div>
+  </section>
+
+  <!-- 04 AI BOARD -->
+  <section class="scene scene--board" data-scene="4">
+    <span class="scene-no">03</span>
+    <div class="board-title"><h2>AI ليس ChatGPT</h2><p>الذكاء الاصطناعي أوسع من تطبيق واحد أو واجهة محادثة.</p></div>
+    <div class="concept-board" data-board="ai">
+      <div class="board-icons">
+        <button data-board-focus aria-label="تركيز"><svg><use href="#i-focus"/></svg></button>
+        <button data-board-reset aria-label="إعادة"><svg><use href="#i-reset"/></svg></button>
+      </div>
+      <svg class="live-links"></svg>
+      <button class="concept-node concept-node--core drag-node" data-key="ai" style="--x:50%;--y:50%"><strong>AI</strong><small>المجال الأوسع</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="classification" data-kind="classification" style="--x:18%;--y:20%"><strong>Classification</strong><small>تصنيف</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="prediction" data-kind="prediction" style="--x:49%;--y:15%"><strong>Prediction</strong><small>تنبؤ</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="detection" data-kind="detection" style="--x:79%;--y:22%"><strong>Detection</strong><small>كشف</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="recommendation" data-kind="recommendation" style="--x:82%;--y:51%"><strong>Recommendation</strong><small>توصية</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="generation" data-kind="generation" style="--x:73%;--y:79%"><strong>Generation</strong><small>توليد</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="assistant" data-kind="assistant" style="--x:44%;--y:84%"><strong>Assistant</strong><small>مساعد</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node drag-node explainer-trigger" data-key="agent" data-kind="agent" style="--x:16%;--y:72%"><strong>Agent</strong><small>وكيل</small><svg><use href="#i-drag"/></svg></button>
+      <button class="concept-node concept-node--orange drag-node explainer-trigger" data-key="chatgpt" data-kind="chatgpt" style="--x:12%;--y:46%"><strong>ChatGPT</strong><small>تطبيق</small><svg><use href="#i-drag"/></svg></button>
+    </div>
+  </section>
+
+  <!-- 05 AI LANDSCAPE -->
+  <section class="scene scene--landscape" data-scene="5">
+    <span class="scene-no">04</span>
+    <div class="split-copy"><h2>من AI إلى LLM</h2><p>طبقات داخل عالم أوسع، مع مجال توليدي يتقاطع معها ولا يساويها.</p></div>
+    <div class="nested-map enter" style="--d:.14s">
+      <div class="nest n1"><span>Artificial Intelligence</span><div class="nest n2"><span>Machine Learning</span><div class="nest n3"><span>Deep Learning</span><div class="nest n4"><span>Foundation Models</span><div class="nest n5"><span>Large Language Models</span></div></div></div></div></div>
+      <div class="gen-field"><strong>Generative AI</strong><span>Text</span><span>Image</span><span>Audio</span><span>Video</span><span>Code</span></div>
+    </div>
+    <div class="bottom-rule">LLM ≠ Generative AI كله</div>
+  </section>
+
+  <!-- 06 ALGORITHM -->
+  <section class="scene scene--algorithm" data-scene="6">
+    <span class="scene-no">05</span>
+    <h2 class="section-title">الخوارزمية ليست الذكاء الاصطناعي</h2>
+    <div class="algo-compare enter" style="--d:.14s">
+      <div class="algo-side"><strong>Algorithm</strong><div class="linear-flow"><span>Input</span><i></i><span>Steps / Rules</span><i></i><span>Output</span></div></div>
+      <div class="ai-side"><strong>AI System</strong><div class="system-parts"><span>Data</span><span>Algorithms</span><span>Model</span><span>Software</span><span>Tools</span></div></div>
+    </div>
+    <div class="triple-rule"><span>Model</span><b>≠</b><span>Application</span><b>≠</b><span>Agent</span></div>
+  </section>
+
+  <!-- 07 DATA SOURCES -->
+  <section class="scene scene--data-sources" data-scene="7">
+    <span class="scene-no">06</span>
+    <h2 class="section-title">ماذا يدخل إلى المنظومة؟</h2>
+    <div class="source-cloud enter" style="--d:.14s"><span>TEXT</span><span>PDF</span><span>TABLE</span><span>IMAGE</span><span>AUDIO</span><span>DATABASE</span></div>
+    <div class="data-duo"><div><strong>Structured</strong><small>Tables · Fields · Records</small></div><div><strong>Unstructured</strong><small>Contracts · Judgments · PDFs · Images · Audio</small></div></div>
+  </section>
+
+  <!-- 08 HUMAN MACHINE -->
+  <section class="scene scene--human-machine" data-scene="8">
+    <span class="scene-no">07</span>
+    <h2 class="section-title">كيف يراه الإنسان… وكيف يعالجه الكمبيوتر؟</h2>
+    <div class="view-compare enter" style="--d:.14s">
+      <div class="human-view"><strong>صورة + كلمات + معنى</strong><div class="doc-visual"><i></i><i></i><i></i></div><p>حلل هذا العقد</p></div>
+      <div class="scan-core"><span></span></div>
+      <div class="machine-view"><strong>تمثيلات رقمية قابلة للحساب</strong><div class="number-field">0101 · 4812 · 93 · 0.72 · 0.18</div><div class="token-row"><i></i><i></i><i></i><i></i></div></div>
+    </div>
+  </section>
+
+  <!-- 09 IMAGE -->
+  <section class="scene scene--image-data" data-scene="9">
+    <span class="scene-no">08</span>
+    <h2 class="section-title">كيف تتحول الصورة إلى بيانات؟</h2>
+    <div class="image-pipeline enter" style="--d:.12s">
+      <div class="sample-image"><div class="pixel-grid"></div></div><i></i><div class="pixel-matrix"><span>82</span><span>146</span><span>211</span><span>74</span><span>131</span><span>205</span><span>65</span><span>120</span><span>192</span></div><i></i><div class="feature-stack"><span>Edges</span><span>Shapes</span><span>Patterns</span></div>
+    </div>
+    <div class="flow-caption">Image → Pixels → Numeric Values → Patterns / Features</div>
+  </section>
+
+  <!-- 10 TEXT -->
+  <section class="scene scene--text-data" data-scene="10">
+    <span class="scene-no">09</span>
+    <h2 class="section-title">كيف تتحول الكتابة إلى بيانات؟</h2>
+    <div class="text-pipeline enter" style="--d:.12s"><div class="arabic-text">حلل هذا العقد</div><i></i><div class="token-boxes"><span>وحدة</span><span>وحدة</span><span>وحدة</span></div><i></i><div class="token-ids"><span>4721</span><span>907</span><span>5621</span></div><i></i><div class="vector-field"><b></b><b></b><b></b><b></b><b></b></div></div>
+    <div class="flow-caption">Text → Tokens → Token IDs → Numerical Representation</div>
+  </section>
+
+  <!-- 11 REPRESENTATION -->
+  <section class="scene scene--representation" data-scene="11">
+    <span class="scene-no">10</span>
+    <h2 class="section-title">مدخلات مختلفة… ومبدأ حسابي مشترك</h2>
+    <div class="merge-stage enter" style="--d:.14s"><div class="merge-path"><strong>Image</strong><span>Pixels</span><span>Values</span></div><div class="merge-core">Digital<br>Representation</div><div class="merge-path"><strong>Text</strong><span>Tokens</span><span>IDs</span></div></div>
+    <p class="scene-note">تختلف طرق الترميز والمعالجة، لكن الحاسب يحتاج في النهاية إلى تمثيلات رقمية قابلة للحساب.</p>
+  </section>
+
+  <!-- 12 ROLES -->
+  <section class="scene scene--roles" data-scene="12">
+    <span class="scene-no">11</span>
+    <h2 class="section-title">من يبني هذه المنظومة؟</h2>
+    <div class="role-pipeline enter" style="--d:.12s"><div class="pipe"></div><article><b>Data Engineer</b><small>Collect · Clean · Move · Organize</small></article><article><b>Data Analyst</b><small>Analyze · Interpret · Report</small></article><article><b>Data Scientist</b><small>Explore · Model · Experiment</small></article><article><b>ML Engineer</b><small>Build · Train · Deploy · Evaluate</small></article><article><b>AI Engineer</b><small>Model · Prompt · Context · Tools · Evaluation</small></article></div>
+    <p class="scene-note">المسميات والأدوار قد تتداخل باختلاف المؤسسة والمشروع.</p>
+  </section>
+
+  <!-- 13 TRAINING -->
+  <section class="scene scene--training" data-scene="13">
+    <span class="scene-no">12</span>
+    <h2 class="section-title">كيف يتغير النموذج أثناء التدريب؟</h2>
+    <div class="training-loop enter" style="--d:.12s"><div class="loop-node">Data</div><i></i><div class="loop-node">Model</div><i></i><div class="loop-node">Prediction</div><i></i><div class="loop-node">Compare</div><i></i><div class="loop-node loop-node--orange">Error</div><i></i><div class="loop-node">Adjust Weights</div><svg viewBox="0 0 300 120"><path d="M275 100 C160 140 80 135 24 82"/></svg></div>
+    <div class="key-line">التدريب يغيّر الأوزان / المعلمات داخل النموذج.</div>
+  </section>
+
+  <!-- 14 WEIGHTS -->
+  <section class="scene scene--weights" data-scene="14">
+    <span class="scene-no">13</span>
+    <h2 class="section-title">أين يذهب ما تعلّمه النموذج؟</h2>
+    <div class="weights-layout enter" style="--d:.12s"><div class="network"><i style="--x:18%;--y:20%"></i><i style="--x:42%;--y:30%"></i><i style="--x:68%;--y:18%"></i><i style="--x:28%;--y:64%"></i><i style="--x:58%;--y:72%"></i><i style="--x:82%;--y:55%"></i><span>0.42 → 0.47</span><span>-0.18 → -0.15</span></div><div class="not-database"><div class="doc-stack"><i></i><i></i><i></i></div><strong>Model ≠ Document Database</strong><p>الأوزان ليست ملفات تدريب يمكن فتحها كقاعدة بيانات.</p></div></div>
+  </section>
+
+  <!-- 15 TEACH MODEL BOARD -->
+  <section class="scene scene--distinction" data-scene="15">
+    <span class="scene-no">14</span>
+    <h2 class="section-title">ماذا تقصد بعبارة «علّمت النموذج»؟</h2>
+    <div class="distinction-board enter" style="--d:.12s">
+      <button class="dist-node explainer-trigger" data-kind="training">Training</button><button class="dist-node explainer-trigger" data-kind="finetuning">Fine-tuning</button><button class="dist-node explainer-trigger" data-kind="prompting">Prompting</button><button class="dist-node explainer-trigger" data-kind="context">Context</button><button class="dist-node explainer-trigger" data-kind="rag">RAG</button><button class="dist-node explainer-trigger" data-kind="memory">Memory</button><button class="dist-node explainer-trigger" data-kind="tool">Tool Use</button>
+      <div class="arch-core"><strong>AI SYSTEM</strong><span>Model Weights</span><span>Instructions</span><span>Working Context</span><span>Stored State</span><span>Knowledge</span><span>Tools</span></div>
+    </div>
+    <div class="key-line">ليست العملية نفسها.</div>
+  </section>
+
+  <!-- 16 GENERATION -->
+  <section class="scene scene--generation" data-scene="16">
+    <span class="scene-no">15</span>
+    <h2 class="section-title">انتهى التدريب… والآن كتبت سؤالًا</h2>
+    <div class="generation-flow enter" style="--d:.12s"><span>Prompt</span><i></i><span>Tokens</span><i></i><span>Context</span><i></i><span>Model</span><i></i><span>Probabilities</span><i></i><span>Next Token</span><i class="loopback"></i><span>Response</span></div>
+    <div class="probability-demo"><b>التالي؟</b><span style="--p:.82">Token A</span><span style="--p:.61">Token B</span><span style="--p:.34">Token C</span></div>
+    <div class="key-line">Generation ≠ Retraining</div>
+  </section>
+
+  <!-- 17 CONTEXT -->
+  <section class="scene scene--context" data-scene="17">
+    <span class="scene-no">16</span>
+    <h2 class="section-title">ماذا يرى النموذج أثناء المهمة؟</h2>
+    <div class="context-window enter" style="--d:.12s"><strong>CONTEXT WINDOW</strong><span>System Instructions</span><span>User Prompt</span><span>Conversation</span><span>Documents</span><span>Retrieved Knowledge</span><span>Tool Results</span><div class="outside">معلومات خارج السياق الحالي</div></div>
+    <div class="context-rules"><span>Context ≠ Training</span><span>Context ≠ Permanent Memory</span><span>File Upload ≠ Fine-tuning</span></div>
+  </section>
+
+  <!-- 18 CAPABILITIES -->
+  <section class="scene scene--capabilities" data-scene="18">
+    <span class="scene-no">17</span>
+    <h2 class="section-title">ماذا يستطيع AI أن يفعل بملف قضية واحد؟</h2>
+    <div class="case-orbit enter" style="--d:.12s"><div class="case-file">CASE</div><span>Extract</span><span>Classify</span><span>Summarize</span><span>Compare</span><span>Retrieve</span><span>Generate</span><span>Recommend</span><span>Use Tools</span></div>
+    <div class="key-line">AI Capability ≠ Chat Interface</div>
+  </section>
+
+  <!-- 19 HALLUCINATION -->
+  <section class="scene scene--hallucination" data-scene="19">
+    <span class="scene-no">18</span>
+    <h2 class="section-title">لماذا يخطئ وهو يبدو مقنعًا؟</h2>
+    <div class="fake-citation enter" style="--d:.12s"><div><strong>الطعن رقم XX لسنة XX</strong><span>جلسة XX / XX / XXXX</span></div><button>Source?</button><em>NOT FOUND</em></div>
+    <div class="truth-rules"><span>Fluency ≠ Accuracy</span><span>Confidence ≠ Evidence</span><span>Generated ≠ Verified</span></div>
+    <div class="key-line key-line--orange">Evidence over Confidence</div>
+  </section>
+
+  <!-- 20 REASONING -->
+  <section class="scene scene--reasoning" data-scene="20">
+    <span class="scene-no">19</span>
+    <h2 class="section-title">ماذا نعني بالاستدلال هنا؟</h2>
+    <div class="reasoning-compare enter" style="--d:.12s"><div><strong>Simple Task</strong><span>Input</span><i></i><span>Output</span></div><div><strong>Complex Task</strong><span>Interpret</span><i></i><span>Compare</span><i></i><span>Check</span><i></i><span>Revise</span><i></i><span>Output</span></div></div>
+    <div class="key-line">Reasoning ≠ Human Mind</div>
+  </section>
+
+  <!-- 21 JOB TASKS -->
+  <section class="scene scene--jobs" data-scene="21">
+    <span class="scene-no">20</span>
+    <h2 class="section-title">التغيير يبدأ من المهمة</h2>
+    <div class="job-break enter" style="--d:.12s"><div class="job-block">JOB</div><div class="task-zone"><span>Human</span><span>Human + AI</span><span>AI-Assisted</span><span>Delegatable</span><span>Human Review</span></div></div>
+    <div class="key-line">AI reshapes Tasks → Tasks reshape Skills → Skills reshape Jobs</div>
+  </section>
+
+  <!-- 22 SKILLS -->
+  <section class="scene scene--skills" data-scene="22">
+    <span class="scene-no">21</span>
+    <h2 class="section-title">المهارات التي ترتفع قيمتها</h2>
+    <div class="skills-merge enter" style="--d:.12s"><div><strong>AI / Digital</strong><span>AI Literacy</span><span>Data Literacy</span><span>Prompting</span><span>Context Design</span><span>Workflow Design</span><span>Tool Use</span></div><div class="skills-core">Human + AI<br>Work Design</div><div><strong>Human / Professional</strong><span>Domain Expertise</span><span>Judgment</span><span>Critical Thinking</span><span>Verification</span><span>Responsibility</span><span>Decision-making</span></div></div>
+  </section>
+
+  <!-- 23 ARCH SUMMARY -->
+  <section class="scene scene--architecture" data-scene="23">
+    <span class="scene-no">22</span>
+    <h2 class="section-title">الصورة الكاملة</h2>
+    <div class="architecture-map enter" style="--d:.12s"><div class="arch-model">MODEL<br><small>Weights</small></div><div class="arch-box">Training → Weights</div><div class="arch-box">Fine-tuning → Weights</div><div class="arch-box">Prompting → Instructions</div><div class="arch-box">Context → Working Context</div><div class="arch-box">RAG → Knowledge → Context</div><div class="arch-box">Memory → Stored State</div><div class="arch-box">Tool Use → External Capability</div></div>
+    <div class="key-line">إعطاء الآلة معلومات ≠ تدريبها</div>
+  </section>
+
+  <!-- 24 RECAP -->
+  <section class="scene scene--recap" data-scene="24">
+    <span class="scene-no">23</span>
+    <h2 class="section-title">ماذا أصبح واضحًا الآن؟</h2>
+    <div class="recap-lines enter" style="--d:.12s"><span>البيانات تغذي المنظومة.</span><span>التدريب يشكل النموذج.</span><span>السياق يحدد ما هو متاح أثناء المهمة.</span><span>التوليد يبني المخرج تدريجيًا.</span><span>الطلاقة ليست دليلًا على الحقيقة.</span></div>
+    <div class="recap-question">هل دربت الآلة فعلًا؟</div>
+  </section>
+
+  <!-- 25 WORKSHOP -->
+  <section class="scene scene--workshop" data-scene="25">
+    <span class="scene-no">24</span>
+    <h2 class="section-title">هل دربت الآلة فعلًا؟</h2>
+    <div class="workshop-stage" data-workshop>
+      <div class="scenario-list">
+        <button class="scenario" data-answer="context">A · رفعت أحكامًا وطلبت تحليلها.</button>
+        <button class="scenario" data-answer="finetuning">B · استخدمت Dataset لتدريب إضافي.</button>
+        <button class="scenario" data-answer="prompting">C · كتبت تعليمات تفصيلية للمهمة.</button>
+        <button class="scenario" data-answer="rag">D · النظام يسترجع أحكامًا ذات صلة ويضيفها للسياق.</button>
+        <button class="scenario" data-answer="tool">E · النظام يستخدم Search أو Calculator أثناء التنفيذ.</button>
+      </div>
+      <div class="answer-zones"><span data-zone="context">Context</span><span data-zone="finetuning">Fine-tuning</span><span data-zone="prompting">Prompting</span><span data-zone="rag">RAG</span><span data-zone="tool">Tool Use</span></div>
+      <button class="workshop-reveal" data-workshop-reveal aria-label="إظهار الحل"><svg><use href="#i-open"/></svg></button>
+    </div>
+    <div class="workshop-final">إعطاء الآلة معلومات ≠ تدريبها</div>
+    <div class="next-chapter">كيف نصوغ لها ما نريد بدقة؟ <strong>→ هندسة الأوامر</strong></div>
+  </section>
+
+  <!-- GLOBAL EXPLAINER -->
+  <aside class="explainer" id="explainer" aria-hidden="true">
+    <button class="explainer-back" data-explainer-back aria-label="عودة"><svg><use href="#i-back"/></svg></button>
+    <div class="explainer-body"><p class="explainer-en"></p><h3></h3><div class="explainer-animation"></div><p class="explainer-copy"></p></div>
+  </aside>
+
+  <nav class="deck-nav" aria-label="التنقل"><button data-prev aria-label="السابق">←</button><span><b id="currentScene">01</b><i></i><em id="totalScenes">26</em></span><button data-next aria-label="التالي">→</button></nav>
+</main>
+<script src="../assets/js/presentation-v2.js"></script>
+</body>
+</html>
