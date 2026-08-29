@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/interactive-board.css">
 </head>
 <body>
   <main class="presentation" id="presentation" tabindex="0" aria-label="العرض التجريبي للمحور الأول">
@@ -19,13 +20,11 @@
       <div class="ambient__line ambient__line--two"></div>
     </div>
 
-    <!-- Scene 01 -->
     <section class="scene scene--intro is-active" data-scene="0" aria-label="مقدمة المحور">
       <header class="scene-hud anim" style="--d:.05s">
         <span class="scene-hud__chapter">01 / UNDERSTAND</span>
         <span class="scene-hud__count">01</span>
       </header>
-
       <div class="scene-layout scene-layout--split">
         <div class="copy-block copy-block--hero">
           <p class="kicker anim" style="--d:.12s">افهم</p>
@@ -33,37 +32,22 @@
           <p class="display-subtitle anim" style="--d:.28s">من التدريب إلى التوليد</p>
           <p class="lead-question anim" style="--d:.4s">ماذا يحدث بين ما يدخل إلى النظام… وما يخرج منه؟</p>
         </div>
-
         <div class="system-flow anim" style="--d:.22s" aria-hidden="true">
-          <div class="source-stack">
-            <span>PDF</span><span>TEXT</span><span>IMAGE</span><span>DATA</span>
-          </div>
+          <div class="source-stack"><span>PDF</span><span>TEXT</span><span>IMAGE</span><span>DATA</span></div>
           <div class="flow-path"><i></i><i></i><i></i></div>
-          <div class="system-core">
-            <div class="system-core__ring"></div>
-            <div class="system-core__ring system-core__ring--inner"></div>
-            <strong>؟</strong>
-          </div>
+          <div class="system-core"><div class="system-core__ring"></div><div class="system-core__ring system-core__ring--inner"></div><strong>؟</strong></div>
           <div class="flow-path flow-path--out"><i></i><i></i><i></i></div>
-          <div class="response-card">
-            <span></span><span></span><span></span><span></span>
-          </div>
+          <div class="response-card"><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
     </section>
 
-    <!-- Scene 02 -->
     <section class="scene scene--map" data-scene="1" aria-label="خريطة المحور">
       <header class="scene-hud anim" style="--d:.05s">
         <span class="scene-hud__chapter">CHAPTER MAP</span>
         <span class="scene-hud__count">02</span>
       </header>
-
-      <div class="scene-heading anim" style="--d:.12s">
-        <p class="kicker">خريطة المحور</p>
-        <h2>رحلة داخل الآلة</h2>
-      </div>
-
+      <div class="scene-heading anim" style="--d:.12s"><p class="kicker">خريطة المحور</p><h2>رحلة داخل الآلة</h2></div>
       <div class="chapter-route anim" style="--d:.22s">
         <div class="route-line" aria-hidden="true"><span></span></div>
         <article class="route-node route-node--active"><b>01</b><strong>المفاهيم</strong><small>ما الذكاء الاصطناعي؟</small></article>
@@ -74,50 +58,73 @@
         <article class="route-node"><b>06</b><strong>القدرات والحدود</strong><small>ماذا تستطيع؟</small></article>
         <article class="route-node"><b>07</b><strong>الإنسان والعمل</strong><small>ماذا يتغير؟</small></article>
       </div>
-
-      <div class="route-footer anim" style="--d:.45s">
-        <span>تصحيح المفاهيم</span><i></i><span>Workshop 01</span>
-      </div>
+      <div class="route-footer anim" style="--d:.45s"><span>تصحيح المفاهيم</span><i></i><span>Workshop 01</span></div>
     </section>
 
-    <!-- Scene 03 -->
-    <section class="scene scene--ai" data-scene="2" aria-label="الذكاء الاصطناعي ليس شات جي بي تي">
+    <section class="scene scene--ai" data-scene="2" aria-label="لوحة تفاعلية: الذكاء الاصطناعي ليس شات جي بي تي">
       <header class="scene-hud anim" style="--d:.05s">
         <span class="scene-hud__chapter">01 / المفاهيم</span>
         <span class="scene-hud__count">03</span>
       </header>
 
-      <div class="scene-layout scene-layout--split scene-layout--ai">
-        <div class="copy-block">
-          <p class="kicker anim" style="--d:.12s">تصحيح المفهوم الأول</p>
-          <h2 class="concept-title anim" style="--d:.2s"><span>AI</span> ليس ChatGPT</h2>
-          <p class="body-copy anim" style="--d:.32s">ChatGPT تطبيق يستخدم قدرات الذكاء الاصطناعي، لكنه لا يمثل مجال الذكاء الاصطناعي كله.</p>
-          <div class="concept-rule anim" style="--d:.48s"><strong>المساعد</strong><span>أحد أدوار AI، وليس تعريفًا للذكاء الاصطناعي.</span></div>
-        </div>
+      <div class="interactive-shell anim" style="--d:.1s">
+        <aside class="board-copy">
+          <p class="kicker">تصحيح المفهوم الأول</p>
+          <h2><span class="latin">AI</span> ليس <span class="latin">ChatGPT</span></h2>
+          <p>لا تقرأ هذه الشاشة فقط. حرّك مكوّناتها أثناء الشرح وابنِ العلاقة أمام الحضور.</p>
+          <p class="board-hint">اسحب أي عقدة بالماوس. اضغط عليها لعرض معناها، واستخدم Focus لعزل الفكرة التي تشرحها.</p>
+        </aside>
 
-        <div class="ai-visual anim" style="--d:.2s" aria-hidden="true">
-          <div class="ai-equation"><span>AI</span><em>≠</em><span>ChatGPT</span></div>
-          <div class="ai-orbit">
-            <div class="ai-core">AI</div>
-            <span style="--a:0deg">Classification</span>
-            <span style="--a:51deg">Prediction</span>
-            <span style="--a:102deg">Detection</span>
-            <span style="--a:153deg">Recommendation</span>
-            <span style="--a:204deg">Generation</span>
-            <span style="--a:255deg">Assistant</span>
-            <span style="--a:306deg">Agent</span>
+        <div class="knowledge-board" data-knowledge-board aria-label="لوحة مفاهيم تفاعلية">
+          <div class="board-toolbar">
+            <button type="button" data-board-action="focus">Focus</button>
+            <button type="button" data-board-action="reset">Reset</button>
           </div>
+
+          <svg class="board-links" aria-hidden="true"></svg>
+
+          <button type="button" class="knowledge-node knowledge-node--core" data-knowledge-node data-node-key="ai" style="--x:50%;--y:49%">
+            <span class="knowledge-node__title">AI</span>
+            <span class="knowledge-node__meta">المجال الأوسع</span>
+          </button>
+
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="classification" style="--x:21%;--y:22%">
+            <span class="knowledge-node__title">Classification</span><span class="knowledge-node__meta">تصنيف</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="prediction" style="--x:48%;--y:17%">
+            <span class="knowledge-node__title">Prediction</span><span class="knowledge-node__meta">تنبؤ</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="detection" style="--x:76%;--y:24%">
+            <span class="knowledge-node__title">Detection</span><span class="knowledge-node__meta">كشف</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="recommendation" style="--x:81%;--y:51%">
+            <span class="knowledge-node__title">Recommendation</span><span class="knowledge-node__meta">توصية</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="generation" style="--x:72%;--y:77%">
+            <span class="knowledge-node__title">Generation</span><span class="knowledge-node__meta">توليد</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="assistant" style="--x:43%;--y:81%">
+            <span class="knowledge-node__title">Assistant</span><span class="knowledge-node__meta">مساعد</span>
+          </button>
+          <button type="button" class="knowledge-node" data-knowledge-node data-node-key="agent" style="--x:18%;--y:70%">
+            <span class="knowledge-node__title">Agent</span><span class="knowledge-node__meta">وكيل</span>
+          </button>
+          <button type="button" class="knowledge-node knowledge-node--chatgpt" data-knowledge-node data-node-key="chatgpt" style="--x:14%;--y:45%">
+            <span class="knowledge-node__title">ChatGPT</span><span class="knowledge-node__meta">تطبيق</span>
+          </button>
+
+          <div class="node-detail" data-node-detail aria-live="polite">
+            <span class="node-detail__eyebrow" data-detail-eyebrow>Concept</span>
+            <strong data-detail-title></strong>
+            <p data-detail-copy></p>
+          </div>
+          <div class="board-status" data-board-status><b>DRAG</b> اسحب أي عقدة · <b>CLICK</b> لشرحها</div>
         </div>
       </div>
     </section>
 
-    <!-- Scene 04 -->
     <section class="scene scene--layers" data-scene="3" aria-label="من الذكاء الاصطناعي إلى النماذج اللغوية الكبيرة">
-      <header class="scene-hud anim" style="--d:.05s">
-        <span class="scene-hud__chapter">01 / المفاهيم</span>
-        <span class="scene-hud__count">04</span>
-      </header>
-
+      <header class="scene-hud anim" style="--d:.05s"><span class="scene-hud__chapter">01 / المفاهيم</span><span class="scene-hud__count">04</span></header>
       <div class="scene-layout scene-layout--split scene-layout--layers">
         <div class="copy-block">
           <p class="kicker anim" style="--d:.12s">من AI إلى LLM</p>
@@ -125,7 +132,6 @@
           <p class="body-copy anim" style="--d:.34s">الـLLM نوع من النماذج، بينما Generative AI يصف فئة أوسع من القدرات التوليدية.</p>
           <div class="concept-rule anim" style="--d:.5s"><strong>LLM ≠</strong><span>Generative AI كله</span></div>
         </div>
-
         <div class="model-map anim" style="--d:.18s" aria-hidden="true">
           <div class="model-stack">
             <div class="model-layer model-layer--1"><span>Artificial Intelligence</span></div>
@@ -134,50 +140,23 @@
             <div class="model-layer model-layer--4"><span>Foundation Models</span></div>
             <div class="model-layer model-layer--5"><span>Large Language Models</span></div>
           </div>
-          <div class="generative-field">
-            <strong>Generative AI</strong>
-            <div><span>Text</span><span>Image</span><span>Audio</span><span>Video</span><span>Code</span></div>
-          </div>
+          <div class="generative-field"><strong>Generative AI</strong><div><span>Text</span><span>Image</span><span>Audio</span><span>Video</span><span>Code</span></div></div>
         </div>
       </div>
     </section>
 
-    <!-- Scene 05 -->
     <section class="scene scene--data" data-scene="4" aria-label="طبقة البيانات">
-      <header class="scene-hud anim" style="--d:.05s">
-        <span class="scene-hud__chapter">02 / البيانات</span>
-        <span class="scene-hud__count">05</span>
-      </header>
-
-      <div class="scene-heading anim" style="--d:.12s">
-        <p class="kicker">DATA LAYER</p>
-        <h2>ماذا يدخل إلى المنظومة؟</h2>
-      </div>
-
+      <header class="scene-hud anim" style="--d:.05s"><span class="scene-hud__chapter">02 / البيانات</span><span class="scene-hud__count">05</span></header>
+      <div class="scene-heading anim" style="--d:.12s"><p class="kicker">DATA LAYER</p><h2>ماذا يدخل إلى المنظومة؟</h2></div>
       <div class="data-stage">
-        <div class="data-sources anim" style="--d:.2s">
-          <span>TEXT</span><span>PDF</span><span>TABLE</span><span>IMAGE</span><span>AUDIO</span><span>DATABASE</span>
-        </div>
-
-        <div class="data-core anim" style="--d:.28s" aria-hidden="true">
-          <div class="data-core__ring"></div>
-          <strong>DATA</strong>
-          <small>Structured / Unstructured</small>
-        </div>
-
+        <div class="data-sources anim" style="--d:.2s"><span>TEXT</span><span>PDF</span><span>TABLE</span><span>IMAGE</span><span>AUDIO</span><span>DATABASE</span></div>
+        <div class="data-core anim" style="--d:.28s" aria-hidden="true"><div class="data-core__ring"></div><strong>DATA</strong><small>Structured / Unstructured</small></div>
         <div class="human-machine-card anim" style="--d:.36s">
-          <div class="view-block">
-            <span class="mini-label">HUMAN VIEW</span>
-            <div class="human-sample"><i></i><b>حلل هذا العقد</b></div>
-          </div>
+          <div class="view-block"><span class="mini-label">HUMAN VIEW</span><div class="human-sample"><i></i><b>حلل هذا العقد</b></div></div>
           <div class="machine-arrow" aria-hidden="true"><span></span></div>
-          <div class="view-block">
-            <span class="mini-label">MACHINE VIEW</span>
-            <div class="machine-sample"><i></i><b>[ TOKENS ]</b></div>
-          </div>
+          <div class="view-block"><span class="mini-label">MACHINE VIEW</span><div class="machine-sample"><i></i><b>[ TOKENS ]</b></div></div>
         </div>
       </div>
-
       <p class="scene-caption anim" style="--d:.52s">مدخلات مختلفة… لكنها تحتاج إلى تمثيل رقمي قابل للمعالجة.</p>
     </section>
 
@@ -188,5 +167,6 @@
     </nav>
   </main>
   <script src="../../assets/js/presentation.js"></script>
+  <script src="../../assets/js/interactive-board.js"></script>
 </body>
 </html>
