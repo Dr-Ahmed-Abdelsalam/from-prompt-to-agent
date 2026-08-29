@@ -9,34 +9,24 @@
   const prevButton = root.querySelector('[data-action="prev"]');
 
   let sceneIndex = Math.max(0, scenes.findIndex(scene => scene.classList.contains('is-active')));
-  let revealIndex = 0;
   let transitionTimer = null;
 
-  const getReveals = index => [...scenes[index].querySelectorAll('.reveal')];
-
   function clearTimer() {
-    if (transitionTimer) {
-      window.clearTimeout(transitionTimer);
-      transitionTimer = null;
-    }
-  }
-
-  function syncSpecialStates() {
-    const scene = scenes[sceneIndex];
-    const sign = scene.querySelector('.equation__sign');
-    if (sign) sign.textContent = revealIndex >= 3 ? '≠' : '=';
+    if (!transitionTimer) return;
+    window.clearTimeout(transitionTimer);
+    transitionTimer = null;
   }
 
   function updateCounter() {
     if (numberEl) numberEl.textContent = String(sceneIndex + 1).padStart(2, '0');
   }
 
-  function resetScene(index) {
-    getReveals(index).forEach(el => el.classList.remove('is-revealed'));
-    if (index === 2) {
-      const sign = scenes[index].querySelector('.equation__sign');
-      if (sign) sign.textContent = '=';
-    }
+  function restartSceneAnimation(scene) {
+    scene.querySelectorAll('.anim').forEach(element => {
+      element.style.animation = 'none';
+      void element.offsetWidth;
+      element.style.animation = '';
+    });
   }
 
   function showScene(index, direction = 1) {
@@ -47,44 +37,28 @@
     const target = scenes[index];
 
     current.classList.add('is-leaving');
-    current.dataset.direction = direction > 0 ? 'forward' : 'backward';
     target.dataset.direction = direction > 0 ? 'forward' : 'backward';
 
     transitionTimer = window.setTimeout(() => {
       current.classList.remove('is-active', 'is-leaving');
       target.classList.add('is-active');
       sceneIndex = index;
-      revealIndex = 0;
-      resetScene(sceneIndex);
       updateCounter();
+      restartSceneAnimation(target);
       root.focus({ preventScroll: true });
-    }, 430);
+    }, 360);
   }
 
-  function revealNext() {
-    const reveals = getReveals(sceneIndex);
-    if (revealIndex < reveals.length) {
-      reveals[revealIndex].classList.add('is-revealed');
-      revealIndex += 1;
-      syncSpecialStates();
-      return;
-    }
+  function nextScene() {
     if (sceneIndex < scenes.length - 1) showScene(sceneIndex + 1, 1);
   }
 
-  function stepBack() {
-    const reveals = getReveals(sceneIndex);
-    if (revealIndex > 0) {
-      revealIndex -= 1;
-      reveals[revealIndex].classList.remove('is-revealed');
-      syncSpecialStates();
-      return;
-    }
+  function previousScene() {
     if (sceneIndex > 0) showScene(sceneIndex - 1, -1);
   }
 
   function jumpToMap() {
-    if (scenes.length > 1) showScene(1, sceneIndex > 1 ? -1 : 1);
+    if (scenes.length > 1 && sceneIndex !== 1) showScene(1, sceneIndex > 1 ? -1 : 1);
   }
 
   async function toggleFullscreen() {
@@ -95,7 +69,7 @@
         await document.exitFullscreen?.();
       }
     } catch (_) {
-      // Fullscreen may be blocked by the host browser; presentation remains usable.
+      // Presentation remains usable if fullscreen is blocked by the browser.
     }
   }
 
@@ -111,27 +85,30 @@
 
     if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(event.key)) {
       event.preventDefault();
-      revealNext();
+      nextScene();
       return;
     }
+
     if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) {
       event.preventDefault();
-      stepBack();
+      previousScene();
       return;
     }
+
     if (event.key.toLowerCase() === 'm') {
       event.preventDefault();
       jumpToMap();
       return;
     }
+
     if (event.key.toLowerCase() === 'f') {
       event.preventDefault();
       toggleFullscreen();
     }
   });
 
-  nextButton?.addEventListener('click', revealNext);
-  prevButton?.addEventListener('click', stepBack);
+  nextButton?.addEventListener('click', nextScene);
+  prevButton?.addEventListener('click', previousScene);
 
   root.addEventListener('pointerdown', event => {
     if (event.target.closest('button')) return;
@@ -139,5 +116,6 @@
   });
 
   updateCounter();
+  restartSceneAnimation(scenes[sceneIndex]);
   root.focus({ preventScroll: true });
 })();
