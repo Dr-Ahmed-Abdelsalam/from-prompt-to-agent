@@ -1,249 +1,111 @@
 (() => {
   const deck = document.getElementById('deck');
   if (!deck) return;
-
   const scenes = [...deck.querySelectorAll('.scene')];
   const currentEl = document.getElementById('currentScene');
   const totalEl = document.getElementById('totalScenes');
-  const nextBtn = deck.querySelector('[data-next]');
-  const prevBtn = deck.querySelector('[data-prev]');
-  const explainer = document.getElementById('explainer');
-  const explainerBack = deck.querySelector('[data-explainer-back]');
-  let sceneIndex = Math.max(0, scenes.findIndex(s => s.classList.contains('is-active')));
-  let transitionTimer = null;
+  const prev = deck.querySelector('[data-prev]');
+  const next = deck.querySelector('[data-next]');
+  let index = Math.max(0, scenes.findIndex(s => s.classList.contains('is-active')));
 
-  if (totalEl) totalEl.textContent = String(scenes.length).padStart(2, '0');
-
-  const pad = n => String(n).padStart(2, '0');
-  const isExplainerOpen = () => explainer?.classList.contains('is-open');
-
-  function updateCounter(){ if(currentEl) currentEl.textContent = pad(sceneIndex + 1); }
-
-  function restartScene(scene){
-    scene.querySelectorAll('.enter').forEach(el => {
-      el.style.animation = 'none';
-      void el.offsetWidth;
-      el.style.animation = '';
-    });
+  function show(i){
+    if(i < 0 || i >= scenes.length || i === index) return;
+    scenes[index].classList.remove('is-active');
+    index = i;
+    scenes[index].classList.add('is-active');
+    currentEl.textContent = String(index + 1).padStart(2,'0');
     requestAnimationFrame(drawAllBoards);
   }
-
-  function showScene(index){
-    if(index < 0 || index >= scenes.length || index === sceneIndex) return;
-    if(isExplainerOpen()) closeExplainer();
-    if(transitionTimer) clearTimeout(transitionTimer);
-    const current = scenes[sceneIndex];
-    const target = scenes[index];
-    current.classList.add('is-leaving');
-    transitionTimer = setTimeout(() => {
-      current.classList.remove('is-active','is-leaving');
-      target.classList.add('is-active');
-      sceneIndex = index;
-      updateCounter();
-      restartScene(target);
-      deck.focus({preventScroll:true});
-    }, 300);
-  }
-
-  function next(){ if(sceneIndex < scenes.length - 1) showScene(sceneIndex + 1); }
-  function prev(){ if(sceneIndex > 0) showScene(sceneIndex - 1); }
-
-  async function fullscreen(){
-    try{
-      if(!document.fullscreenElement) await deck.requestFullscreen?.();
-      else await document.exitFullscreen?.();
-    }catch(_){ }
-  }
-
-  deck.querySelectorAll('[data-jump]').forEach(btn => btn.addEventListener('click', () => showScene(Number(btn.dataset.jump))));
-  nextBtn?.addEventListener('click', next);
-  prevBtn?.addEventListener('click', prev);
-
-  deck.addEventListener('keydown', e => {
-    if(e.target instanceof HTMLElement && ['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
-    if(isExplainerOpen()){
-      if(e.key === 'Escape' || e.key === 'ArrowLeft'){ e.preventDefault(); closeExplainer(); }
-      return;
-    }
-    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ e.preventDefault(); next(); return; }
-    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); return; }
-    if(e.key.toLowerCase() === 'f'){ e.preventDefault(); fullscreen(); return; }
-    if(e.key.toLowerCase() === 'h'){ e.preventDefault(); showScene(1); }
+  totalEl.textContent = String(scenes.length).padStart(2,'0');
+  currentEl.textContent = String(index + 1).padStart(2,'0');
+  prev?.addEventListener('click',()=>show(index-1));
+  next?.addEventListener('click',()=>show(index+1));
+  deck.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.jump))));
+  deck.addEventListener('keydown',e=>{
+    if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();show(index+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();show(index-1)}
+    if(e.key.toLowerCase()==='f') deck.requestFullscreen?.();
   });
 
-  /* Draggable concept boards */
-  const boardStates = [];
-
-  deck.querySelectorAll('[data-board]').forEach(board => {
-    const nodes = [...board.querySelectorAll('.drag-node')];
-    const core = nodes.find(n => n.dataset.key === 'ai') || nodes[0];
-    const svg = board.querySelector('.live-links');
-    const reset = board.querySelector('[data-board-reset]');
-    const focus = board.querySelector('[data-board-focus]');
-    const initial = new Map();
-    let selected = null;
-    let focusMode = false;
-    let drag = null;
-
-    nodes.forEach(node => initial.set(node,{x:node.style.getPropertyValue('--x'),y:node.style.getPropertyValue('--y')}));
-
-    function center(node){
-      const br = board.getBoundingClientRect();
-      const nr = node.getBoundingClientRect();
-      return {x:nr.left-br.left+nr.width/2,y:nr.top-br.top+nr.height/2};
-    }
-
-    function ensureLines(){
-      if(!svg || !core) return;
-      if(svg.children.length === nodes.length - 1) return;
-      svg.innerHTML = '';
-      nodes.filter(n => n !== core).forEach(node => {
-        const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-        line.dataset.to = node.dataset.key || '';
-        if(node.dataset.key === 'chatgpt') line.classList.add('orange');
-        svg.appendChild(line);
-      });
-    }
-
-    function draw(){
-      if(!svg || !core || board.offsetParent === null) return;
-      ensureLines();
-      const a = center(core);
-      svg.querySelectorAll('line').forEach(line => {
-        const node = nodes.find(n => n.dataset.key === line.dataset.to);
-        if(!node) return;
-        const b = center(node);
-        line.setAttribute('x1',a.x); line.setAttribute('y1',a.y); line.setAttribute('x2',b.x); line.setAttribute('y2',b.y);
-        line.classList.toggle('focus', Boolean(selected && (node === selected || core === selected)));
-      });
-    }
-
-    function select(node){
-      selected = node;
-      nodes.forEach(n => n.classList.toggle('dim',focusMode && selected && n !== selected && n !== core && selected !== core));
-      draw();
-    }
-
-    function position(event){
-      if(!drag) return;
-      const rect = board.getBoundingClientRect();
-      const nr = drag.node.getBoundingClientRect();
-      const hw = nr.width/2, hh = nr.height/2, p = 14;
-      const x = Math.min(rect.width-hw-p,Math.max(hw+p,event.clientX-rect.left-drag.dx));
-      const y = Math.min(rect.height-hh-p,Math.max(hh+p,event.clientY-rect.top-drag.dy));
-      drag.node.style.left = x+'px'; drag.node.style.top = y+'px';
-      drag.node.style.removeProperty('--x'); drag.node.style.removeProperty('--y');
-      draw();
-    }
-
-    nodes.forEach(node => {
-      node.addEventListener('pointerdown', e => {
-        if(e.button !== 0) return;
-        e.preventDefault();
-        const r = node.getBoundingClientRect();
-        drag = {node,startX:e.clientX,startY:e.clientY,dx:e.clientX-(r.left+r.width/2),dy:e.clientY-(r.top+r.height/2),moved:false,pointerId:e.pointerId};
-        node.classList.add('is-dragging');
-        node.setPointerCapture?.(e.pointerId);
-      });
-      node.addEventListener('click', e => {
-        if(node._suppressClick){ e.preventDefault(); e.stopPropagation(); node._suppressClick=false; return; }
-      },true);
-    });
-
-    window.addEventListener('pointermove', e => {
-      if(!drag) return;
-      if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>5) drag.moved=true;
-      position(e);
-    });
-    window.addEventListener('pointerup', e => {
-      if(!drag) return;
-      const node = drag.node;
-      node.classList.remove('is-dragging');
-      try{ node.releasePointerCapture?.(drag.pointerId); }catch(_){ }
-      if(drag.moved){ node._suppressClick=true; select(node); }
-      drag=null; draw();
-    });
-
-    reset?.addEventListener('click', e => {
-      e.stopPropagation();
-      nodes.forEach(n => {
-        const p = initial.get(n); n.style.left=''; n.style.top=''; n.style.setProperty('--x',p.x); n.style.setProperty('--y',p.y); n.classList.remove('dim');
-      });
-      selected=null; focusMode=false; focus?.classList.remove('is-active'); requestAnimationFrame(draw);
-    });
-    focus?.addEventListener('click', e => {
-      e.stopPropagation(); focusMode=!focusMode; focus.classList.toggle('is-active',focusMode); select(selected || core);
-    });
-    board.addEventListener('pointerdown',e => { if(e.target===board || e.target===svg){ selected=null; nodes.forEach(n=>n.classList.remove('dim')); draw(); } });
-    boardStates.push({board,draw});
-  });
-
-  function drawAllBoards(){ boardStates.forEach(s=>s.draw()); }
-  window.addEventListener('resize',drawAllBoards);
-
-  /* Mini explainer scenes */
+  const explainer = document.getElementById('explainer');
+  const explainerTitle = document.getElementById('explainerTitle');
+  const explainerText = document.getElementById('explainerText');
+  const explainerVisual = document.getElementById('explainerVisual');
+  const explainerBack = document.getElementById('explainerBack');
   const explainers = {
-    classification:{en:'CLASSIFICATION',title:'التصنيف',copy:'إسناد المدخل إلى فئة أو أكثر وفق الأنماط التي يستخدمها النظام.',anim:'categories'},
-    prediction:{en:'PREDICTION',title:'التنبؤ',copy:'تقدير قيمة أو نتيجة محتملة اعتمادًا على البيانات والأنماط.',anim:'bars'},
-    detection:{en:'DETECTION',title:'الكشف',copy:'العثور على كيان أو نمط أو حالة محددة داخل البيانات.',anim:'target'},
-    recommendation:{en:'RECOMMENDATION',title:'التوصية',copy:'ترتيب أو اقتراح خيارات وفق معايير أو أنماط ذات صلة.',anim:'bars'},
-    generation:{en:'GENERATION',title:'التوليد',copy:'إنشاء مخرج جديد مثل نص أو صورة أو صوت أو كود انطلاقًا من المدخلات والسياق.',anim:'flow',labels:['Prompt','Model','New Output']},
-    assistant:{en:'ASSISTANT',title:'المساعد',copy:'دور أو تطبيق يساعد الإنسان في تنفيذ مهمة؛ وليس تعريفًا للذكاء الاصطناعي كله.',anim:'humanai'},
-    agent:{en:'AGENT',title:'الوكيل',copy:'نظام يعمل نحو هدف، وقد يستخدم أدوات وينفذ عدة خطوات ضمن ضوابط محددة.',anim:'agent'},
-    chatgpt:{en:'CHATGPT',title:'تطبيق للذكاء الاصطناعي',copy:'واجهة وتطبيق يستخدم نموذجًا وتعليمات وسياقًا وقدرات أخرى؛ لكنه لا يساوي مجال AI كله.',anim:'chat'},
-    training:{en:'TRAINING',title:'التدريب',copy:'عملية تعلم أساسية تتغير خلالها أوزان/معلمات النموذج استنادًا إلى البيانات وإشارة التعلم.',anim:'flow',labels:['Data','Learn','Weights Change']},
-    finetuning:{en:'FINE-TUNING',title:'التدريب الإضافي',copy:'تدريب إضافي يكيّف نموذجًا قائمًا لمجال أو سلوك أو مهمة؛ ويؤثر في الأوزان.',anim:'flow',labels:['Base Model','Additional Training','Adapted Model']},
-    prompting:{en:'PROMPTING',title:'التوجيه وقت الاستخدام',copy:'تعليمات نرسلها أثناء المهمة لتحديد المطلوب والقيود وشكل المخرج؛ ولا تعني تدريبًا جديدًا.',anim:'flow',labels:['Instruction','Model','Response']},
-    context:{en:'CONTEXT',title:'السياق',copy:'المعلومات المتاحة للنموذج أثناء تنفيذ المهمة الحالية: تعليمات، محادثة، مستندات، نتائج أدوات وغيرها.',anim:'flow',labels:['Prompt','Context','Model']},
-    rag:{en:'RAG',title:'الاسترجاع المعزز للتوليد',copy:'استرجاع معلومات خارجية ذات صلة ثم إضافتها إلى السياق قبل التوليد.',anim:'flow',labels:['Knowledge','Retrieve','Context']},
-    memory:{en:'MEMORY',title:'الذاكرة',copy:'حالة أو معلومات يحفظها التطبيق وفق تصميمه لاستخدام لاحق؛ وهي مختلفة عن التدريب والسياق اللحظي.',anim:'flow',labels:['Store','Recall','Use']},
-    tool:{en:'TOOL USE',title:'استخدام الأدوات',copy:'استدعاء قدرة خارجية مثل البحث أو قاعدة بيانات أو آلة حاسبة أو ملف أو خدمة.',anim:'flow',labels:['Model','Tool','Result']}
+    classification:['Classification','التصنيف يضع المدخلات في فئات وفق الأنماط التي يتعرف عليها النظام.',['Input','Class A','Class B']],
+    prediction:['Prediction','التنبؤ يقدّر نتيجة أو قيمة محتملة اعتمادًا على البيانات والأنماط.',['Data','Estimate','Outcome']],
+    detection:['Detection','الكشف يبحث عن نمط أو كيان أو حالة محددة داخل البيانات.',['Data','Detect','Signal']],
+    generation:['Generation','التوليد ينشئ مخرجًا جديدًا مثل النص أو الصورة أو الكود.',['Prompt','Model','New Output']],
+    assistant:['Assistant','المساعد دور تطبيقي يساعد الإنسان في تنفيذ مهمة؛ وليس تعريفًا للذكاء الاصطناعي كله.',['Human','Assistant','Response']],
+    agent:['Agent','الوكيل يعمل نحو هدف عبر خطوات وقد يستخدم أدوات خارجية ضمن ضوابط محددة.',['Goal','Tool','Action']],
+    chatgpt:['ChatGPT','ChatGPT تطبيق يستخدم نماذج وقدرات ذكاء اصطناعي؛ لكنه ليس مجال الذكاء الاصطناعي كله.',['AI','Application','ChatGPT']],
+    training:['Training','التدريب يغيّر أوزان النموذج من خلال التعلم من البيانات.',['Data','Learn','Weights']],
+    finetuning:['Fine-tuning','تدريب إضافي لنموذج موجود لتكييفه مع مهمة أو نطاق محدد.',['Model','Extra Training','Adjusted Model']],
+    prompting:['Prompting','تعليمات تقدّم للنموذج وقت الاستخدام لتحديد المطلوب وشكل المخرج.',['Instruction','Model','Response']],
+    context:['Context','المعلومات المتاحة للنموذج أثناء تنفيذ المهمة الحالية.',['Prompt','Documents','Context']],
+    rag:['RAG','يسترجع النظام معلومات خارجية ذات صلة ثم يضيفها إلى السياق قبل التوليد.',['Retrieve','Context','Generate']],
+    tools:['Tool Use','يستخدم النظام قدرة خارجية مثل البحث أو قاعدة بيانات أو آلة حاسبة.',['Model','Tool','Result']]
   };
-
-  function animationMarkup(item){
-    if(item.anim==='categories') return '<div class="mini-categories"><span>فئة A</span><span>فئة B</span><span>فئة C</span></div>';
-    if(item.anim==='bars') return '<div class="mini-bars"><span style="--w:88%"></span><span style="--w:64%"></span><span style="--w:37%"></span></div>';
-    if(item.anim==='target') return '<div class="mini-target"></div>';
-    if(item.anim==='humanai') return '<div class="mini-human-ai"><span>Human</span><i></i><span>AI</span></div>';
-    if(item.anim==='agent') return '<div class="mini-agent"><span>Goal</span><i></i><span>Plan</span><i></i><span>Tool</span><i></i><span>Action</span><i></i><span>Result</span></div>';
-    if(item.anim==='chat') return '<div class="mini-chat"><div><span>Model</span><span>Instructions</span><span>Context</span></div><strong>ChatGPT</strong><div><span>Interface</span><span>Tools</span><span>Output</span></div></div>';
-    const labels = item.labels || ['Input','Process','Output'];
-    return `<div class="mini-flow"><span>${labels[0]}</span><i></i><span>${labels[1]}</span><i></i><span>${labels[2]}</span></div>`;
+  function openExplainer(key){
+    const data = explainers[key]; if(!data) return;
+    explainerTitle.textContent=data[0];
+    explainerText.textContent=data[1];
+    explainerVisual.innerHTML=`<div class="mini-flow"><span>${data[2][0]}</span><i></i><span>${data[2][1]}</span><i></i><span>${data[2][2]}</span></div>`;
+    explainer.classList.add('open'); explainer.setAttribute('aria-hidden','false');
   }
+  function closeExplainer(){explainer.classList.remove('open');explainer.setAttribute('aria-hidden','true')}
+  explainerBack?.addEventListener('click',closeExplainer);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&explainer.classList.contains('open')) closeExplainer()});
+  deck.querySelectorAll('.explain-pill').forEach(b=>b.addEventListener('click',()=>openExplainer(b.dataset.key)));
 
-  function openExplainer(kind){
-    const item = explainers[kind]; if(!item || !explainer) return;
-    explainer.querySelector('.explainer-en').textContent=item.en;
-    explainer.querySelector('h3').textContent=item.title;
-    explainer.querySelector('.explainer-copy').textContent=item.copy;
-    explainer.querySelector('.explainer-animation').innerHTML=animationMarkup(item);
-    explainer.classList.add('is-open'); explainer.setAttribute('aria-hidden','false');
+  const boards=[...deck.querySelectorAll('[data-board]')];
+  function center(node,board){const br=board.getBoundingClientRect(),nr=node.getBoundingClientRect();return{x:nr.left-br.left+nr.width/2,y:nr.top-br.top+nr.height/2}}
+  function drawBoard(board){
+    if(!board.closest('.scene')?.classList.contains('is-active')) return;
+    const svg=board.querySelector('.links'),nodes=[...board.querySelectorAll('.node')],core=board.querySelector('[data-key="ai"]');
+    if(!svg||!core) return;
+    if(svg.children.length!==nodes.length-1){svg.innerHTML='';nodes.filter(n=>n!==core).forEach(n=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.dataset.to=n.dataset.key;if(n.dataset.key==='chatgpt')l.classList.add('orange-line');svg.appendChild(l)})}
+    const s=center(core,board);[...svg.children].forEach(l=>{const n=board.querySelector(`[data-key="${l.dataset.to}"]`);if(!n)return;const e=center(n,board);l.setAttribute('x1',s.x);l.setAttribute('y1',s.y);l.setAttribute('x2',e.x);l.setAttribute('y2',e.y)})
   }
-  function closeExplainer(){ if(!explainer) return; explainer.classList.remove('is-open'); explainer.setAttribute('aria-hidden','true'); }
+  function drawAllBoards(){boards.forEach(drawBoard)}
 
-  deck.querySelectorAll('.explainer-trigger').forEach(el => el.addEventListener('click', e => {
-    if(el._suppressClick){ el._suppressClick=false; return; }
-    e.stopPropagation(); openExplainer(el.dataset.kind);
-  }));
-  explainerBack?.addEventListener('click', closeExplainer);
+  boards.forEach(board=>{
+    const nodes=[...board.querySelectorAll('.drag-node')];
+    const initial=new Map(nodes.map(n=>[n,{x:n.style.getPropertyValue('--x'),y:n.style.getPropertyValue('--y')}]))
+    let drag=null,selected=null,focused=false;
+    nodes.forEach(node=>{
+      node.addEventListener('pointerdown',e=>{
+        if(e.button!==0)return;e.preventDefault();
+        const r=node.getBoundingClientRect();drag={node,id:e.pointerId,startX:e.clientX,startY:e.clientY,dx:e.clientX-(r.left+r.width/2),dy:e.clientY-(r.top+r.height/2),moved:false};
+        node.classList.add('dragging');node.setPointerCapture?.(e.pointerId);
+      });
+    });
+    window.addEventListener('pointermove',e=>{
+      if(!drag)return;
+      const boardRect=board.getBoundingClientRect(),nodeRect=drag.node.getBoundingClientRect();
+      if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>5)drag.moved=true;
+      const hw=nodeRect.width/2,hh=nodeRect.height/2,pad=14;
+      const x=Math.max(hw+pad,Math.min(boardRect.width-hw-pad,e.clientX-boardRect.left-drag.dx));
+      const y=Math.max(hh+pad,Math.min(boardRect.height-hh-pad,e.clientY-boardRect.top-drag.dy));
+      drag.node.style.left=x+'px';drag.node.style.top=y+'px';drag.node.style.removeProperty('--x');drag.node.style.removeProperty('--y');drawBoard(board);
+    });
+    window.addEventListener('pointerup',e=>{
+      if(!drag)return;const node=drag.node;node.classList.remove('dragging');try{node.releasePointerCapture?.(drag.id)}catch(_){ }
+      if(!drag.moved && node.classList.contains('explain')) openExplainer(node.dataset.key);
+      selected=node;drag=null;
+      if(focused)applyFocus();
+    });
+    const applyFocus=()=>nodes.forEach(n=>n.style.opacity=focused&&selected&&n!==selected&&n.dataset.key!=='ai'?'.16':'1');
+    board.querySelector('[data-focus]')?.addEventListener('click',()=>{focused=!focused;applyFocus()});
+    board.querySelector('[data-reset]')?.addEventListener('click',()=>{
+      nodes.forEach(n=>{const p=initial.get(n);n.style.left='';n.style.top='';n.style.setProperty('--x',p.x);n.style.setProperty('--y',p.y);n.style.opacity='1'});selected=null;focused=false;requestAnimationFrame(()=>drawBoard(board));
+    });
+    new ResizeObserver(()=>drawBoard(board)).observe(board);
+  });
 
-  /* Workshop */
-  const answerLabels = {context:'Context',finetuning:'Fine-tuning',prompting:'Prompting',rag:'RAG',tool:'Tool Use'};
-  const workshop = deck.querySelector('[data-workshop]');
-  if(workshop){
-    const scenarios=[...workshop.querySelectorAll('.scenario')];
-    const zones=[...workshop.querySelectorAll('[data-zone]')];
-    const reveal=workshop.querySelector('[data-workshop-reveal]');
-    const final=deck.querySelector('.workshop-final');
-    function solve(s){
-      s.classList.add('is-solved'); s.dataset.label=answerLabels[s.dataset.answer];
-      zones.forEach(z=>z.classList.toggle('active',z.dataset.zone===s.dataset.answer || z.classList.contains('active')));
-    }
-    scenarios.forEach(s=>s.addEventListener('click',()=>solve(s)));
-    reveal?.addEventListener('click',()=>{ scenarios.forEach(solve); final?.classList.add('show'); });
-  }
-
-  updateCounter();
-  restartScene(scenes[sceneIndex]);
-  deck.focus({preventScroll:true});
+  document.querySelectorAll('#workshop button').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('revealed')));
+  window.addEventListener('resize',drawAllBoards);
+  requestAnimationFrame(()=>requestAnimationFrame(drawAllBoards));
 })();
