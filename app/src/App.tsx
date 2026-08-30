@@ -12,12 +12,6 @@ import './styles/app.scss';
 type SessionValue = { items?: string[]; range?: number; mode?: string; focus?: string; cycles?: number };
 
 const axisStarts = ['S05', 'S15', 'S25', 'S35', 'S45'] as const;
-const professionalLines = [
-  'دكتوراه في القانون',
-  'محامٍ بالنقض والإدارية والدستورية العليا',
-  'عضو المكتب الفني بأكاديمية العدالة',
-  'مهندس بيانات — Data Engineer / Microsoft Track',
-];
 
 function titleWithAccent(title: string) {
   if (title.includes('تفويضها')) {
@@ -35,16 +29,6 @@ function titleWithAccent(title: string) {
   return title;
 }
 
-function useProfessionalLine(active: boolean) {
-  const [lineIndex, setLineIndex] = useState(0);
-  useEffect(() => {
-    if (!active) return undefined;
-    const timer = window.setInterval(() => setLineIndex((value) => (value + 1) % professionalLines.length), 4600);
-    return () => window.clearInterval(timer);
-  }, [active]);
-  return professionalLines[lineIndex];
-}
-
 function JourneyTrack({ compact = false }: { compact?: boolean }) {
   const steps = [
     ['افهم', 'UNDERSTAND'], ['وجّه', 'INSTRUCT'], ['زوّد', 'CONTEXTUALIZE'],
@@ -60,24 +44,23 @@ function JourneyTrack({ compact = false }: { compact?: boolean }) {
 }
 
 function CoverScene({ slide, onNext }: { slide: Slide; onNext: () => void }) {
-  const line = useProfessionalLine(slide.id === 'S01');
   const isOpening = slide.id === 'S01';
   return <div className={`cover-scene ${isOpening ? 'cover-scene--opening' : 'cover-scene--axis'}`}>
     {isOpening && <img className="cover-logo" src={`${import.meta.env.BASE_URL}assets/academy-logo.png`} alt="أكاديمية العدالة" />}
     <div className="cover-copy">
       {isOpening ? <>
         <p className="cover-kicker">عرض ويب تفاعلي · 2026</p>
-        <h1 id={`${slide.id}-title`}>من مخاطبة الآلة إلى <em>تفويضها</em></h1>
+        <h1 id={`${slide.id}-title`} className="opening-title">
+          <span>من مخاطبة الآلة</span>
+          <span>إلى <em>تفويضها</em></span>
+        </h1>
         <p className="cover-subtitle">من هندسة الأوامر إلى هندسة الوكلاء</p>
       </> : <>
         <p className="eyebrow">{slide.axis}</p>
         <h1 id={`${slide.id}-title`}>{titleWithAccent(slide.title)}</h1>
         <p className="cover-subtitle">{slide.premise}</p>
       </>}
-      {isOpening && <>
-        <div className="speaker-name"><span>دكتور</span><strong>أحمد عبدالسلام</strong></div>
-        <div className="professional-line" aria-live="polite"><span>{line}</span></div>
-      </>}
+      {isOpening && <div className="speaker-name"><span>دكتور</span><strong>أحمد عبدالسلام</strong></div>}
       {slide.term && <BilingualTerm english={slide.term.english} arabic={slide.term.arabic} className="cover-term" />}
       {isOpening && <button className="start-button" type="button" onClick={onNext}><span>ابدأ</span><b aria-hidden="true">→</b></button>}
     </div>
@@ -151,7 +134,6 @@ export default function App() {
   const [explainer, setExplainer] = useState<string | null>(null);
   const current = presentation.current;
   const currentSession = session[current.id] ?? {};
-  const isCover = current.id === 'S01';
   const isAxisMapSlide = current.id === 'S02';
 
   const updateSession = (next: SessionValue) => setSession((previous) => ({ ...previous, [current.id]: next }));
