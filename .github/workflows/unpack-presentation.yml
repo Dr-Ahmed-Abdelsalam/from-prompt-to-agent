@@ -24,8 +24,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .deploy/chunk-*.b64 > /tmp/presentation.b64
-          base64 --ignore-garbage -d /tmp/presentation.b64 > /tmp/presentation.zip
+          : > /tmp/presentation.zip
+          for f in $(find .deploy -maxdepth 1 -type f -name 'chunk-*.b64' | sort); do
+            echo "Decoding $f"
+            base64 --ignore-garbage -d "$f" >> /tmp/presentation.zip
+          done
           unzip -t /tmp/presentation.zip
           unzip -o /tmp/presentation.zip -d .
 
