@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'presentation-deploy.zip'
+      - '.deploy/**'
       - '.github/workflows/unpack-presentation.yml'
   workflow_dispatch:
 
@@ -20,9 +20,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Unpack presentation into repository root
+      - name: Rebuild and unpack presentation
         run: |
-          unzip -o presentation-deploy.zip -d .
+          cat .deploy/chunk-*.b64 > /tmp/presentation.b64
+          base64 -d /tmp/presentation.b64 > /tmp/presentation.zip
+          unzip -t /tmp/presentation.zip
+          unzip -o /tmp/presentation.zip -d .
 
       - name: Commit published presentation
         run: |
