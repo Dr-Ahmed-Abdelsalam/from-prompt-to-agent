@@ -16,16 +16,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Rebuild and unpack presentation
+        shell: bash
         run: |
+          set -euo pipefail
           cat .deploy/chunk-*.b64 > /tmp/presentation.b64
-          base64 -d /tmp/presentation.b64 > /tmp/presentation.zip
+          base64 --ignore-garbage -d /tmp/presentation.b64 > /tmp/presentation.zip
           unzip -t /tmp/presentation.zip
           unzip -o /tmp/presentation.zip -d .
+
+      - name: Verify presentation entry points
+        run: |
+          test -f index.html
+          test -f hub.html
+          test -f css/main.css
+          test -f js/presentation.js
+          test -f modules/01-understand/index.html
+          test -f modules/05-agents/index.html
+          echo "Presentation bundle verified."
 
       - name: Commit published presentation
         run: |
