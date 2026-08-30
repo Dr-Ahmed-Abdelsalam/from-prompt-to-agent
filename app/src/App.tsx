@@ -51,8 +51,8 @@ function CoverScene({ slide, onNext }: { slide: Slide; onNext: () => void }) {
       {isOpening ? <>
         <p className="cover-kicker">عرض ويب تفاعلي · 2026</p>
         <h1 id={`${slide.id}-title`} className="opening-title">
-          <span>من مخاطبة الآلة</span>
-          <span>إلى <em>تفويضها</em></span>
+          <span style={{ display: 'block' }}>من مخاطبة الآلة</span>
+          <span style={{ display: 'block' }}>إلى <em>تفويضها</em></span>
         </h1>
         <p className="cover-subtitle">من هندسة الأوامر إلى هندسة الوكلاء</p>
       </> : <>
