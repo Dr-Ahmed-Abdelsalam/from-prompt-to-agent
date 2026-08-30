@@ -1,0 +1,37 @@
+name: Publish interactive presentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'presentation-deploy.zip'
+      - '.github/workflows/unpack-presentation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Unpack presentation into repository root
+        run: |
+          unzip -o presentation-deploy.zip -d .
+
+      - name: Commit published presentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .nojekyll index.html hub.html css js modules overview final content scss
+          if git diff --cached --quiet; then
+            echo "No presentation changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish interactive lecture presentation"
+          git push origin HEAD:main
