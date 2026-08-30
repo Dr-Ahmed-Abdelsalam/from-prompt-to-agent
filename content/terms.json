@@ -1,0 +1,70 @@
+{
+  "prompt": [
+    "هندسة الأوامر",
+    "Prompt Engineering"
+  ],
+  "context": [
+    "هندسة السياق",
+    "Context Engineering"
+  ],
+  "workflow": [
+    "سير العمل",
+    "Workflow"
+  ],
+  "agent": [
+    "هندسة الوكلاء",
+    "Agent Engineering"
+  ],
+  "hallucination": [
+    "الهلوسة",
+    "Hallucination"
+  ],
+  "window": [
+    "نافذة السياق",
+    "Context Window"
+  ],
+  "finetune": [
+    "الضبط الدقيق",
+    "Fine-tuning"
+  ],
+  "rag": [
+    "الاسترجاع المعزز بالتوليد — RAG",
+    "Retrieval-Augmented Generation — RAG"
+  ],
+  "tools": [
+    "الأدوات",
+    "Tools"
+  ],
+  "memory": [
+    "الذاكرة",
+    "Memory"
+  ],
+  "evaluation": [
+    "التقييم",
+    "Evaluation"
+  ],
+  "oversight": [
+    "الرقابة البشرية",
+    "Human Oversight"
+  ],
+  "autonomy": [
+    "الاستقلالية",
+    "Autonomy"
+  ],
+  "llm": [
+    "النموذج اللغوي الكبير — LLM",
+    "Large Language Model — LLM"
+  ],
+  "structured": [
+    "المخرجات المنظمة",
+    "Structured Outputs"
+  ],
+  "grounding": [
+    "الارتكاز إلى المصدر",
+    "Grounding"
+  ],
+  "promptinjection": [
+    "حقن الأوامر",
+    "Prompt Injection"
+  ]
+}

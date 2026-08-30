@@ -1,0 +1,62 @@
+# Slide Manifest
+
+- **S01** — الغلاف الرئيسي — `index.html`
+- **S02** — من مخاطبة الآلة إلى تفويضها — `hub.html`
+- **S03** — لن نتعلم كيف نسأل فقط — `overview/index.html`
+- **S04** — رحلة واحدة من التوجيه إلى التفويض — `overview/index.html`
+- **S05** — قبل الـPrompt: اضبط بيئة المهمة — `overview/index.html`
+- **S06** — S06 — `modules/01-understand/index.html`
+- **S07** — خريطة المحور الأول — `modules/01-understand/index.html`
+- **S08** — ليست كل كلمة AI الشيء نفسه — `modules/01-understand/index.html`
+- **S09** — افصل بين النموذج وما يُبنى حوله — `modules/01-understand/index.html`
+- **S10** — كيف تظهر الإجابة؟ — `modules/01-understand/index.html`
+- **S11** — الرموزTokens ليست كلمات بالضرورة — `modules/01-understand/index.html`
+- **S12** — كيف تتدرّب الآلة؟ — `modules/01-understand/index.html`
+- **S13** — التعلّم يُخزَّن في أوزان لا في “مجلد إجابات” — `modules/01-understand/index.html`
+- **S14** — ثلاثة مفاهيم لا تخلط بينها — `modules/01-understand/index.html`
+- **S15** — ماذا يتغير فعلًا؟ — `modules/01-understand/index.html`
+- **S16** — هل هذا تدريب أم استخدام؟ — `modules/01-understand/index.html`
+- **S17** — S17 — `modules/02-prompt/index.html`
+- **S18** — خريطة المحور الثاني — `modules/02-prompt/index.html`
+- **S19** — السؤال يطلب إجابة؛ الـPrompt يصمّم مهمة — `modules/02-prompt/index.html`
+- **S20** — تشريح الأمر الاحترافيProfessional Prompt — `modules/02-prompt/index.html`
+- **S21** — لا تبدأ بالدور؛ ابدأ بـالنتيجة — `modules/02-prompt/index.html`
+- **S22** — ماذا يجب أن يعرف؟ وعلى ماذا سيعمل؟ — `modules/02-prompt/index.html`
+- **S23** — القيود ليست “لا تهلوس” — `modules/02-prompt/index.html`
+- **S24** — أضف للنموذج طريقة يفشل بها بأمان — `modules/02-prompt/index.html`
+- **S25** — عرّف النجاح قبل التنفيذ — `modules/02-prompt/index.html`
+- **S26** — لا تطلب منه “عدم الهلوسة”؛ صمّم سياسة للنقص — `modules/02-prompt/index.html`
+- **S27** — ليس مطلوبًا من النموذج أن يجيب دائمًا — `modules/02-prompt/index.html`
+- **S28** — ماذا يحدث عندما تتعارض تعليماتك؟ — `modules/02-prompt/index.html`
+- **S29** — علّم الحدود ثم اختبرها — `modules/02-prompt/index.html`
+- **S30** — Prompt Surgery — `modules/02-prompt/index.html`
+- **S31** — S31 — `modules/03-context/index.html`
+- **S32** — خريطة المحور الثالث — `modules/03-context/index.html`
+- **S33** — السؤال مختلف عن المعرفة المتاحة للإجابة — `modules/03-context/index.html`
+- **S34** — السياق أكبر من “ملف مرفق” — `modules/03-context/index.html`
+- **S35** — الارتكاز إلى المصدرGrounding — `modules/03-context/index.html`
+- **S36** — المستند بيانات وليس صاحب سلطة — `modules/03-context/index.html`
+- **S37** — المشكلة ليست دائمًا نقص المعلومات؛ أحيانًا زيادتها — `modules/03-context/index.html`
+- **S38** — الاسترجاع المعزز بالتوليد — RAGRetrieval-Augmented Generation — RAG — `modules/03-context/index.html`
+- **S39** — RAG ليس الحل لكل شيء — `modules/03-context/index.html`
+- **S40** — Build the Context — `modules/03-context/index.html`
+- **S41** — S41 — `modules/04-workflow/index.html`
+- **S42** — خريطة المحور الرابع — `modules/04-workflow/index.html`
+- **S43** — المهمة المعقدة لا تُلقى على النموذج دفعة واحدة — `modules/04-workflow/index.html`
+- **S44** — كل خطوة تسلّم ما بعدها — `modules/04-workflow/index.html`
+- **S45** — من نص للقراءة إلى بيانات للاستخدام — `modules/04-workflow/index.html`
+- **S46** — صمّم طريقة العمل قبل أن تفكر في الوكيل — `modules/04-workflow/index.html`
+- **S47** — لا تسمح للخطأ أن يسافر إلى نهاية النظام — `modules/04-workflow/index.html`
+- **S48** — بدل «حلل القضية» — `modules/04-workflow/index.html`
+- **S49** — Design the Workflow — `modules/04-workflow/index.html`
+- **S50** — S50 — `modules/05-agents/index.html`
+- **S51** — خريطة المحور الخامس — `modules/05-agents/index.html`
+- **S52** — ليس كل نظام ذكي Agent — `modules/05-agents/index.html`
+- **S53** — ممّ يتكون الوكيلAI Agent؟ — `modules/05-agents/index.html`
+- **S54** — المعرفة شيء؛ والقدرة على الفعل شيء آخر — `modules/05-agents/index.html`
+- **S55** — الذاكرةMemory ليست التدريب — `modules/05-agents/index.html`
+- **S56** — التفويض درجات وليس زر تشغيل/إيقاف — `modules/05-agents/index.html`
+- **S57** — كلما زادت القدرة على الفعل، زادت أهمية الحدود — `modules/05-agents/index.html`
+- **S58** — حقن الأوامرPrompt Injection يغيّر السؤال: من يملك السلطة؟ — `modules/05-agents/index.html`
+- **S59** — Design Your AI Agent — `modules/05-agents/index.html`
+- **S60** — من الاستخدام إلى هندسة العمل — `final/index.html`

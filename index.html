@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!--
+  S01 — الغلاف الرئيسي (Cover)
+  المشروع: من مخاطبة الآلة إلى تفويضها
+  آخر تحديث:
+  - خط العنوان بقى Tajawal بوزن Black (900) — أقرب مطابقة متاحة لنمط الخط في صورتك المرجعية (عقود فيديك)، لأني ما قدرتش أستخرج ملف الخط الفعلي من صورة. لو ده مش نفس الخط بالظبط قوللي وهبحث عن أقرب منه.
+  - التموجات: استُبدلت خطوط "المقاييس" المستقيمة بخطوط تموّج فعلية (S-curve) منسابة تتحرك حركة أفقية خفيفة، لتوصيف تقني أوضح لكلمة "تموجات".
+  - زر البدء بقى أيقونة دائرية فقط بدون كلمة "ابدأ" — توهّج خفيف دائم، يشتد عند التمرير والنقر.
+  - ملاحظة للمستقبل: عند بناء أي عنصر متعدد يحمل تتابعًا (Timeline/Steps متعددة العقد)، يُراعى ترتيبه من اليمين إلى اليسار تبعًا للغة العربية.
+  - الشعار الأصلي مُستخدم كما هو (خلفيته البيضاء فقط أُزيلت تقنيًا؛ لم يُعَد رسم الشكل).
+  - هذا عرض معاينة تفاعلي مستقل لشريحة S01 فقط (HTML/CSS/JS)، وليس تطبيق React/Vite/TS/SCSS الكامل الموصوف في «البنية التقنية».
+-->
 <html lang="ar" dir="rtl" data-slide-id="S01">
 <head>
 <meta charset="UTF-8" />
@@ -8,6 +19,214 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy-deep:#050B18;--navy-mid:#0B1730;--sky-blue:#4EA8FF;--ice-blue:#A7D8FF;--orange:#F7941D;--warm-white:#F8F6F1;--term-green:#4ADE80;--font-title:'Tajawal','IBM Plex Sans Arabic',sans-serif;--font-ar:'IBM Plex Sans Arabic','Noto Sans Arabic',sans-serif;--font-mono:'IBM Plex Mono','IBM Plex Sans Arabic',monospace}*{box-sizing:border-box}html,body{margin:0;padding:0;min-height:100%;background:var(--navy-deep)}body{font-family:var(--font-ar);font-weight:300;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.stage{position:relative;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse 130% 90% at 50% 0%,var(--navy-mid),var(--navy-deep) 62%)}.bgfx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.wave{position:absolute;border-radius:50%;filter:blur(70px);opacity:.32;animation:drift 16s ease-in-out infinite}.wave-blue{width:58vw;height:58vw;left:-16vw;bottom:-26vw;background:radial-gradient(circle,var(--sky-blue),transparent 65%)}.wave-orange{width:52vw;height:52vw;right:-14vw;bottom:-24vw;background:radial-gradient(circle,var(--orange),transparent 65%);animation-delay:-8s}@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(2.5%,-2%) scale(1.06)}}.circuits{position:absolute;inset:0;width:100%;height:100%;opacity:.2}.circuit-line{fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 9;animation:flowDash 9s linear infinite}.circuit-line.c-blue{stroke:var(--sky-blue)}.circuit-line.c-orange{stroke:var(--orange)}@keyframes flowDash{to{stroke-dashoffset:-140}}.wave-line{fill:none;stroke-width:1.6;stroke-linecap:round;opacity:.4;animation:waveDrift 11s ease-in-out infinite}.wave-line.c-blue{stroke:var(--sky-blue)}.wave-line.c-orange{stroke:var(--orange);animation-duration:14s;animation-delay:-3s}@keyframes waveDrift{0%,100%{transform:translateX(0) translateY(0)}50%{transform:translateX(-2.5%) translateY(6px)}}.particles{position:absolute;inset:0}.particle{position:absolute;border-radius:50%;background:var(--ice-blue);animation:twinkle 5s ease-in-out infinite}@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.65}}.vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 78% 78% at 50% 46%,transparent 50%,rgba(2,6,14,.6) 100%)}.content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:1200px;width:100%;padding:5vh 6vw;gap:clamp(18px,3vh,32px)}.content>*{opacity:0;animation:riseIn .85s cubic-bezier(.2,.8,.2,1) both}@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.logo-wrap{position:relative;width:clamp(64px,7.5vw,96px);height:clamp(64px,7.5vw,96px);display:flex;align-items:center;justify-content:center;margin-bottom:clamp(6px,1.4vh,18px);animation-delay:.1s}.logo-glow{position:absolute;inset:-35%;border-radius:50%;background:radial-gradient(circle,rgba(247,148,29,.4),transparent 70%);filter:blur(16px);animation:pulseGlow 4.5s ease-in-out infinite}.logo-img{position:relative;z-index:1;width:100%;height:auto;display:block;filter:drop-shadow(0 0 16px rgba(247,148,29,.28))}@keyframes pulseGlow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}.title{font-family:var(--font-title);margin:0;line-height:1.45;font-weight:800;font-size:clamp(1.8rem,4.5vw,3.6rem);color:var(--warm-white);animation-delay:.35s}.title em{color:var(--orange);font-style:normal;font-weight:900}.subtitle{margin:0;color:var(--sky-blue);font-weight:300;font-size:clamp(.95rem,1.7vw,1.3rem);animation-delay:.75s}.presenter{animation-delay:1.05s}.pname{margin:0;color:var(--warm-white);font-weight:300;font-size:clamp(1.05rem,1.9vw,1.4rem);line-height:1.55}.pname strong{display:block;font-weight:500;font-size:1.2em;margin-top:3px}.cred-line{margin:10px 0 0;min-height:1.3em}.credential-text{display:inline-flex;align-items:center;color:var(--term-green);font-family:var(--font-mono);font-weight:400;font-size:clamp(.7rem,.95vw,.82rem);text-shadow:0 0 12px rgba(74,222,128,.35)}.cred-cursor{display:inline-block;width:.5em;margin-inline-start:2px;color:var(--term-green);animation:blink 1s steps(1,jump-none) infinite}@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}.start-btn{position:relative;width:clamp(56px,6vw,72px);height:clamp(56px,6vw,72px);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(248,246,241,.55);background:rgba(255,255,255,.02);color:var(--warm-white);cursor:pointer;transition:all .25s ease;animation-delay:1.35s}.start-btn-glow{position:absolute;inset:-45%;border-radius:50%;background:radial-gradient(circle,rgba(247,148,29,.32),transparent 70%);filter:blur(10px);animation:btnPulse 3.4s ease-in-out infinite;pointer-events:none}@keyframes btnPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}.start-btn:hover{border-color:var(--orange);color:var(--orange);box-shadow:0 0 0 1px var(--orange);transform:translateY(-1px)}.start-btn:hover .start-btn-glow{opacity:1;animation-play-state:paused;transform:scale(1.25)}.start-btn:active{transform:translateY(0) scale(.94)}.start-btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px}.start-btn svg{position:relative;width:34%;height:34%;z-index:1}@media(max-width:640px){.start-btn{width:56px;height:56px}}@media(prefers-reduced-motion:reduce){.content>*{animation:none!important;opacity:1!important;transform:none!important}.wave,.logo-glow,.particle,.cred-cursor,.circuit-line,.wave-line,.start-btn-glow{animation:none!important;opacity:.35!important}}
+  :root{
+    --navy-deep:#050B18;
+    --navy-mid:#0B1730;
+    --sky-blue:#4EA8FF;
+    --ice-blue:#A7D8FF;
+    --orange:#F7941D;
+    --warm-white:#F8F6F1;
+    --term-green:#4ADE80;
+    --font-title:'Tajawal','IBM Plex Sans Arabic',sans-serif;
+    --font-ar:'IBM Plex Sans Arabic','Noto Sans Arabic',sans-serif;
+    --font-mono:'IBM Plex Mono','IBM Plex Sans Arabic',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;min-height:100%;background:var(--navy-deep);}
+  body{font-family:var(--font-ar);font-weight:300;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+  .stage{
+    position:relative;min-height:100vh;width:100%;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(ellipse 130% 90% at 50% 0%, var(--navy-mid), var(--navy-deep) 62%);
+  }
+
+  /* ---------- background ---------- */
+  .bgfx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .wave{position:absolute;border-radius:50%;filter:blur(70px);opacity:.32;animation:drift 16s ease-in-out infinite;}
+  .wave-blue{width:58vw;height:58vw;left:-16vw;bottom:-26vw;background:radial-gradient(circle,var(--sky-blue),transparent 65%);}
+  .wave-orange{width:52vw;height:52vw;right:-14vw;bottom:-24vw;background:radial-gradient(circle,var(--orange),transparent 65%);animation-delay:-8s;}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(2.5%,-2%) scale(1.06);}}
+
+  /* thin circuit traces: slow flowing dashes = technology; even, ruled geometry = law's order */
+  .circuits{position:absolute;inset:0;width:100%;height:100%;opacity:.2;}
+  .circuit-line{fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 9;animation:flowDash 9s linear infinite;}
+  .circuit-line.c-blue{stroke:var(--sky-blue);}
+  .circuit-line.c-orange{stroke:var(--orange);}
+  @keyframes flowDash{to{stroke-dashoffset:-140;}}
+
+  .wave-line{fill:none;stroke-width:1.6;stroke-linecap:round;opacity:.4;animation:waveDrift 11s ease-in-out infinite;}
+  .wave-line.c-blue{stroke:var(--sky-blue);}
+  .wave-line.c-orange{stroke:var(--orange);animation-duration:14s;animation-delay:-3s;}
+  @keyframes waveDrift{0%,100%{transform:translateX(0) translateY(0);}50%{transform:translateX(-2.5%) translateY(6px);}}
+
+  .particles{position:absolute;inset:0;}
+  .particle{position:absolute;border-radius:50%;background:var(--ice-blue);animation:twinkle 5s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:.65;}}
+
+  .vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 78% 78% at 50% 46%, transparent 50%, rgba(2,6,14,.6) 100%);}
+
+  /* ---------- content ---------- */
+  .content{
+    position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;
+    max-width:1200px;width:100%;padding:5vh 6vw;gap:clamp(18px,3vh,32px);
+  }
+  .content > *{opacity:0;animation:riseIn .85s cubic-bezier(.2,.8,.2,1) both;}
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .logo-wrap{position:relative;width:clamp(64px,7.5vw,96px);height:clamp(64px,7.5vw,96px);display:flex;align-items:center;justify-content:center;
+    margin-bottom:clamp(6px,1.4vh,18px);animation-delay:.1s;}
+  .logo-glow{position:absolute;inset:-35%;border-radius:50%;background:radial-gradient(circle,rgba(247,148,29,.4),transparent 70%);filter:blur(16px);animation:pulseGlow 4.5s ease-in-out infinite;}
+  .logo-img{position:relative;z-index:1;width:100%;height:auto;display:block;filter:drop-shadow(0 0 16px rgba(247,148,29,.28));}
+  @keyframes pulseGlow{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.07);}}
+
+  .title{font-family:var(--font-title);margin:0;line-height:1.45;font-weight:800;
+    font-size:clamp(1.8rem,4.5vw,3.6rem);color:var(--warm-white);animation-delay:.35s;}
+  .title em{color:var(--orange);font-style:normal;font-weight:900;}
+
+  .subtitle{margin:0;color:var(--sky-blue);font-weight:300;font-size:clamp(.95rem,1.7vw,1.3rem);animation-delay:.75s;}
+
+  .presenter{animation-delay:1.05s;}
+  .pname{margin:0;color:var(--warm-white);font-weight:300;font-size:clamp(1.05rem,1.9vw,1.4rem);line-height:1.55;}
+  .pname strong{display:block;font-weight:500;font-size:1.2em;margin-top:3px;}
+  .cred-line{margin:10px 0 0;min-height:1.3em;}
+  .credential-text{display:inline-flex;align-items:center;color:var(--term-green);font-family:var(--font-mono);font-weight:400;font-size:clamp(.7rem,.95vw,.82rem);text-shadow:0 0 12px rgba(74,222,128,.35);}
+  .cred-cursor{display:inline-block;width:.5em;margin-inline-start:2px;color:var(--term-green);animation:blink 1s steps(1,jump-none) infinite;}
+  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+
+  .start-btn{position:relative;width:clamp(56px,6vw,72px);height:clamp(56px,6vw,72px);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:1.5px solid rgba(248,246,241,.55);background:rgba(255,255,255,.02);color:var(--warm-white);
+    cursor:pointer;transition:all .25s ease;animation-delay:1.35s;}
+  .start-btn-glow{position:absolute;inset:-45%;border-radius:50%;background:radial-gradient(circle,rgba(247,148,29,.32),transparent 70%);filter:blur(10px);animation:btnPulse 3.4s ease-in-out infinite;pointer-events:none;}
+  @keyframes btnPulse{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
+  .start-btn:hover{border-color:var(--orange);color:var(--orange);box-shadow:0 0 0 1px var(--orange);transform:translateY(-1px);}
+  .start-btn:hover .start-btn-glow{opacity:1;animation-play-state:paused;transform:scale(1.25);}
+  .start-btn:active{transform:translateY(0) scale(.94);}
+  .start-btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px;}
+  .start-btn svg{position:relative;width:34%;height:34%;z-index:1;}
+
+  @media (max-width:640px){
+    .start-btn{width:56px;height:56px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .content > *{animation:none !important;opacity:1 !important;transform:none !important;}
+    .wave,.logo-glow,.particle,.cred-cursor,.circuit-line,.wave-line,.start-btn-glow{animation:none !important;opacity:.35 !important;}
+  }
 </style>
-</head><body><main class="stage"><div class="bgfx" aria-hidden="true"><div class="wave wave-blue"></div><div class="wave wave-orange"></div><svg class="circuits" viewBox="0 0 1600 900" preserveAspectRatio="none"><path class="circuit-line c-blue" d="M0 55 H150 L180 85 H340 L370 55 H540"/><path class="circuit-line c-blue" style="animation-delay:-2.7s" d="M0 145 H95 L120 120 H310 L335 145 H460"/><path class="circuit-line c-blue" style="animation-delay:-5.4s" d="M40 0 V50 L65 75 V210"/><path class="circuit-line c-orange" style="animation-delay:-1.4s" d="M1600 765 H1450 L1420 735 H1240 L1210 765 H1050"/><path class="circuit-line c-orange" style="animation-delay:-3.9s" d="M1600 835 H1515 L1490 810 H1345 L1320 835 H1190"/><path class="circuit-line c-orange" style="animation-delay:-6.3s" d="M1560 900 V860 L1535 835 V700"/><path class="wave-line c-blue" d="M-80,250 C120,190 320,310 520,250 C720,190 920,310 1120,250 C1320,190 1520,310 1680,250"/><path class="wave-line c-blue" style="opacity:.22" d="M-80,300 C130,360 330,240 530,300 C730,360 930,240 1130,300 C1330,360 1530,240 1680,300"/><path class="wave-line c-orange" d="M-80,650 C140,710 340,590 540,650 C740,710 940,590 1140,650 C1340,710 1540,590 1680,650"/></svg><div class="particles" id="particles"></div><div class="vignette"></div></div><div class="content"><div class="logo-wrap"><div class="logo-glow"></div><img class="logo-img" alt="شعار أكاديمية العدالة" src="app/public/assets/academy-logo.png"/></div><h1 class="title">من مخاطبة الآلة إلى <em>تفويضها</em></h1><p class="subtitle">من هندسة الأوامر إلى هندسة الوكلاء</p><div class="presenter"><p class="pname">دكتور<strong>أحمد عبدالسلام</strong></p><p class="cred-line"><span class="credential-text" id="credentialText"><span id="credTyped">دكتوراه في قانون التحكيم</span><span class="cred-cursor">▍</span></span></p></div><button class="start-btn" type="button" id="startBtn" aria-label="ابدأ العرض"><span class="start-btn-glow" aria-hidden="true"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></div></main><script>(function(){var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,field=document.getElementById('particles');for(var i=0;i<18;i++){var p=document.createElement('span');p.className='particle';var size=(Math.random()*2.4+1.2).toFixed(1);p.style.width=size+'px';p.style.height=size+'px';p.style.left=(Math.random()*100).toFixed(1)+'%';p.style.top=(Math.random()*100).toFixed(1)+'%';if(!reduced){p.style.animationDelay=(Math.random()*5).toFixed(2)+'s';p.style.animationDuration=(4+Math.random()*3).toFixed(2)+'s'}else{p.style.animation='none';p.style.opacity=.3}field.appendChild(p)}var creds=[{text:'دكتوراه في قانون التحكيم',dir:'rtl'},{text:'عضو المكتب الفني بأكاديمية العدالة',dir:'rtl'},{text:'محامٍ بالنقض والإدارية والدستورية العليا',dir:'rtl'},{text:'محكم دولي',dir:'rtl'},{text:'AI & Data Science – Microsoft Data Engineer',dir:'ltr'}],wrap=document.getElementById('credentialText'),typed=document.getElementById('credTyped');if(!reduced){var idx=0;function loop(){var c=creds[idx],i=0;wrap.style.direction=c.dir;(function t(){i++;typed.textContent=c.text.slice(0,i);i<c.text.length?setTimeout(t,38):setTimeout(e,2000)})();function e(){i--;typed.textContent=c.text.slice(0,i);i>0?setTimeout(e,20):(idx=(idx+1)%creds.length,setTimeout(loop,450))}}setTimeout(loop,1600)}document.getElementById('startBtn').addEventListener('click',function(){window.location.href='hub.html'})})();</script></body></html>
+</head>
+<body>
+<main class="stage">
+  <div class="bgfx" aria-hidden="true">
+    <div class="wave wave-blue"></div>
+    <div class="wave wave-orange"></div>
+    <svg class="circuits" viewBox="0 0 1600 900" preserveAspectRatio="none">
+      <path class="circuit-line c-blue" d="M0 55 H150 L180 85 H340 L370 55 H540" />
+      <path class="circuit-line c-blue" style="animation-delay:-2.7s" d="M0 145 H95 L120 120 H310 L335 145 H460" />
+      <path class="circuit-line c-blue" style="animation-delay:-5.4s" d="M40 0 V50 L65 75 V210" />
+      <path class="circuit-line c-orange" style="animation-delay:-1.4s" d="M1600 765 H1450 L1420 735 H1240 L1210 765 H1050" />
+      <path class="circuit-line c-orange" style="animation-delay:-3.9s" d="M1600 835 H1515 L1490 810 H1345 L1320 835 H1190" />
+      <path class="circuit-line c-orange" style="animation-delay:-6.3s" d="M1560 900 V860 L1535 835 V700" />
+      <path class="wave-line c-blue" d="M-80,250 C120,190 320,310 520,250 C720,190 920,310 1120,250 C1320,190 1520,310 1680,250" />
+      <path class="wave-line c-blue" style="opacity:.22" d="M-80,300 C130,360 330,240 530,300 C730,360 930,240 1130,300 C1330,360 1530,240 1680,300" />
+      <path class="wave-line c-orange" d="M-80,650 C140,710 340,590 540,650 C740,710 940,590 1140,650 C1340,710 1540,590 1680,650" />
+    </svg>
+    <div class="particles" id="particles"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <div class="content">
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <img class="logo-img" alt="شعار أكاديمية العدالة" src="app/public/assets/academy-logo.png" />
+    </div>
+
+    <h1 class="title">من مخاطبة الآلة إلى <em>تفويضها</em></h1>
+
+    <p class="subtitle">من هندسة الأوامر إلى هندسة الوكلاء</p>
+
+    <div class="presenter">
+      <p class="pname">دكتور<strong>أحمد عبدالسلام</strong></p>
+      <p class="cred-line"><span class="credential-text" id="credentialText"><span id="credTyped">دكتوراه في قانون التحكيم</span><span class="cred-cursor" id="credCursor">▍</span></span></p>
+    </div>
+
+    <button class="start-btn" type="button" id="startBtn" aria-label="ابدأ العرض">
+      <span class="start-btn-glow" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var field = document.getElementById('particles');
+  var n = 18;
+  for (var i=0;i<n;i++){
+    var p = document.createElement('span');
+    p.className = 'particle';
+    var size = (Math.random()*2.4 + 1.2).toFixed(1);
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.left = (Math.random()*100).toFixed(1)+'%';
+    p.style.top = (Math.random()*100).toFixed(1)+'%';
+    if (!reduced){
+      p.style.animationDelay = (Math.random()*5).toFixed(2)+'s';
+      p.style.animationDuration = (4+Math.random()*3).toFixed(2)+'s';
+    } else {
+      p.style.animation = 'none';
+      p.style.opacity = 0.3;
+    }
+    field.appendChild(p);
+  }
+
+  var creds = [
+    {text:'دكتوراه في قانون التحكيم', dir:'rtl'},
+    {text:'عضو المكتب الفني بأكاديمية العدالة', dir:'rtl'},
+    {text:'محامٍ بالنقض والإدارية والدستورية العليا', dir:'rtl'},
+    {text:'محكم دولي', dir:'rtl'},
+    {text:'AI & Data Science – Microsoft Data Engineer', dir:'ltr'}
+  ];
+  var wrapEl = document.getElementById('credentialText');
+  var typedEl = document.getElementById('credTyped');
+
+  if (reduced){
+    wrapEl.style.direction = creds[0].dir;
+    typedEl.textContent = creds[0].text;
+  } else {
+    var idx = 0, TYPE_MS = 38, ERASE_MS = 20, HOLD_MS = 2000, GAP_MS = 450, START_DELAY = 1600;
+    function typeLoop(){
+      var cred = creds[idx], text = cred.text, i = 0;
+      wrapEl.style.direction = cred.dir;
+      (function typeStep(){
+        i++;
+        typedEl.textContent = text.slice(0, i);
+        if (i < text.length){
+          setTimeout(typeStep, TYPE_MS);
+        } else {
+          setTimeout(eraseStep, HOLD_MS);
+        }
+      })();
+      function eraseStep(){
+        i--;
+        typedEl.textContent = text.slice(0, i);
+        if (i > 0){
+          setTimeout(eraseStep, ERASE_MS);
+        } else {
+          idx = (idx + 1) % creds.length;
+          setTimeout(typeLoop, GAP_MS);
+        }
+      }
+    }
+    setTimeout(typeLoop, START_DELAY);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    this.style.transform = 'scale(.96)';
+    var self = this;
+    setTimeout(function(){ self.style.transform=''; window.location.href='hub.html'; }, 140);
+  });
+})();
+</script>
+</body>
+</html>
