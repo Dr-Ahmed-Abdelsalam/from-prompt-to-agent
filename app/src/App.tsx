@@ -166,6 +166,11 @@ export default function App() {
   const scene = useMemo(() => <SlideScene slide={current} session={currentSession} updateSession={updateSession} openExplainer={openExplainer} onChoose={goToId} />, [current, currentSession]);
 
   useEffect(() => { setExplainer(null); }, [current.id]);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setExplainer(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return <div className="presentation-app">
     <MotionLayer />
