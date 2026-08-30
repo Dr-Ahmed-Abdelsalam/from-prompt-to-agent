@@ -187,8 +187,8 @@ export default function App() {
       </div>}
     </SlideFrame>
 
-    {presentation.hubOpen && <AxisMap current={current} onChoose={chooseSlide} onClose={() => presentation.setHubOpen(false)} />}
-    {presentation.mapOpen && <AxisMap current={current} onChoose={chooseSlide} onClose={() => presentation.setMapOpen(false)} />}
+    {presentation.hubOpen && <AxisMap mode="hub" current={current} onChoose={chooseSlide} onClose={() => presentation.setHubOpen(false)} />}
+    {presentation.mapOpen && <AxisMap mode="axis" current={current} onChoose={chooseSlide} onClose={() => presentation.setMapOpen(false)} />}
     {explainer && <ExplainerOverlay title={current.title} label={explainer} onClose={() => setExplainer(null)} />}
   </div>;
 }

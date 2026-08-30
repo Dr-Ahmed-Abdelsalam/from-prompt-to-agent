@@ -204,16 +204,20 @@
   }
 
   function openExplainer(label) {
+    if (overlay) return;
     const flows = { 'التصنيف': ['Objects', 'Categories'], 'Classification': ['Objects', 'Categories'], 'التوليد': ['Prompt', 'Model', 'Generated Output'], 'Generation': ['Prompt', 'Model', 'Generated Output'], 'RAG': ['Question', 'Retrieve', 'Relevant Sources', 'Context', 'Model'], 'الوكيل': ['Goal', 'Plan', 'Tool', 'Action', 'Observation', 'Next Action'] };
     const flow = flows[label] || [label, 'Role', 'Effect'];
     overlay = 'explainer';
     document.body.insertAdjacentHTML('beforeend', `<div class="overlay" id="overlay"><section class="overlay-panel"><button class="overlay-close" id="overlay-close" aria-label="إغلاق الشرح">×</button><p class="eyebrow">شرح بصري</p><h2>${escapeHTML(current().title)}</h2><div class="flow-overlay">${flow.map((step, i) => `<span><b>${escapeHTML(step)}</b>${i < flow.length - 1 ? '<i>→</i>' : ''}</span>`).join('')}</div></section></div>`);
     $('#overlay-close').addEventListener('click', closeOverlay);
   }
-  function openMap() {
+  function openMap(axisOnly) {
+    if (overlay) return;
     overlay = 'map';
     const labels = [['S05', 'كيف تعمل الآلة؟', 'UNDERSTAND'], ['S15', 'هندسة الأوامر', 'INSTRUCT'], ['S25', 'هندسة السياق', 'CONTEXTUALIZE'], ['S35', 'سير العمل بالذكاء الاصطناعي', 'ORCHESTRATE'], ['S45', 'هندسة الوكلاء', 'DELEGATE']];
-    document.body.insertAdjacentHTML('beforeend', `<div class="overlay" id="overlay"><section class="overlay-panel"><button class="overlay-close" id="overlay-close" aria-label="إغلاق الخريطة">×</button><p class="eyebrow">مسار المحاضرة</p><h2>من الفهم إلى <em>التفويض</em></h2><p class="overlay-lede">ست محطات، ومسؤولية واحدة لا تغيب.</p><div class="overlay-grid">${labels.map((x, i) => `<button data-overlay-go="${x[0]}"><span class="ring">${i + 1}</span><strong>${x[1]}</strong><small>${x[2]}</small></button>`).join('')}<div class="control"><span class="ring">✓</span><strong>راقب</strong><small>CONTROL</small></div></div></section></div>`);
+    const axisSlides = slides.filter((item) => item.axis === current().axis);
+    const grid = axisOnly && axisSlides.length ? axisSlides.map((item) => `<button data-overlay-go="${item.id}"><span class="ring">${item.number}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.term.english)}</small></button>`).join('') : labels.map((x, i) => `<button data-overlay-go="${x[0]}"><span class="ring">${i + 1}</span><strong>${x[1]}</strong><small>${x[2]}</small></button>`).join('') + '<div class="control"><span class="ring">✓</span><strong>راقب</strong><small>CONTROL</small></div>';
+    document.body.insertAdjacentHTML('beforeend', `<div class="overlay" id="overlay"><section class="overlay-panel"><button class="overlay-close" id="overlay-close" aria-label="إغلاق الخريطة">×</button><p class="eyebrow">${axisOnly && axisSlides.length ? escapeHTML(current().axis) : 'مسار المحاضرة'}</p><h2>${axisOnly && axisSlides.length ? 'مشاهد <em>' + escapeHTML(current().axis) + '</em>' : 'من الفهم إلى <em>التفويض</em>'}</h2><p class="overlay-lede">${axisOnly && axisSlides.length ? 'تسلسل المحور مع بقاء الحالة محفوظة.' : 'ست محطات، ومسؤولية واحدة لا تغيب.'}</p><div class="overlay-grid">${grid}</div></section></div>`);
     $('#overlay-close').addEventListener('click', closeOverlay);
     document.querySelectorAll('[data-overlay-go]').forEach((button) => button.addEventListener('click', () => { goTo(button.dataset.overlayGo); closeOverlay(); }));
   }
@@ -223,8 +227,8 @@
   function previous() { if (index > 0) goTo(slides[index - 1].id); }
   function fullscreen() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => undefined); }
 
-  $('#next').addEventListener('click', next); $('#prev').addEventListener('click', previous); $('#nav-next').addEventListener('click', next); $('#nav-prev').addEventListener('click', previous); $('#hub').addEventListener('click', openMap); $('#map').addEventListener('click', openMap); $('#fullscreen').addEventListener('click', fullscreen);
+  $('#next').addEventListener('click', next); $('#prev').addEventListener('click', previous); $('#nav-next').addEventListener('click', next); $('#nav-prev').addEventListener('click', previous); $('#hub').addEventListener('click', () => openMap(false)); $('#map').addEventListener('click', () => openMap(true)); $('#fullscreen').addEventListener('click', fullscreen);
   window.addEventListener('hashchange', () => { const target = slideById(window.location.hash.slice(1)); if (target) { index = target.number - 1; render(target); } });
-  window.addEventListener('keydown', (event) => { if (event.target && /input|textarea|select/i.test(event.target.tagName)) return; if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); next(); } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); previous(); } else if (event.key.toLowerCase() === 'f') fullscreen(); else if (event.key.toLowerCase() === 'h' || event.key.toLowerCase() === 'm') openMap(); else if (event.key === 'Escape' && overlay) closeOverlay(); });
+  window.addEventListener('keydown', (event) => { if (event.target && /input|textarea|select/i.test(event.target.tagName)) return; if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); next(); } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); previous(); } else if (event.key.toLowerCase() === 'f') fullscreen(); else if (event.key.toLowerCase() === 'h') openMap(false); else if (event.key.toLowerCase() === 'm') openMap(true); else if (event.key === 'Escape' && overlay) closeOverlay(); });
   const initial = slideById(window.location.hash.slice(1)); if (initial) index = initial.number - 1; render(current());
 })();
